@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:bind="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<import type="cz.kinst.jakub.view.StatefulLayout.State"/>
+
+		<variable
+			name="viewModel"
+			type="cz.kinst.jakub.viewmodelbinding.MainViewModel"/>
+	</data>
+
+	<cz.kinst.jakub.view.StatefulLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:paddingBottom="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin"
+		bind:state="@{viewModel.weatherData == null ? State.PROGRESS : State.CONTENT}"
+		tools:context=".MainActivity">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="@string/temperature"
+			android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+			android:text="@{@string/temperature(viewModel.weatherData.main.temp)}"/>
+	</cz.kinst.jakub.view.StatefulLayout>
+</layout>

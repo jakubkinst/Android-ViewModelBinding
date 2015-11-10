@@ -1,0 +1,4 @@
+<resources>
+	<string name="app_name">ViewModelBinding</string>
+	<string name="temperature">%s°</string>
+</resources>
