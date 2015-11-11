@@ -6,6 +6,8 @@ import android.location.Location;
 import android.location.LocationManager;
 
 import cz.kinst.jakub.viewmodelbinding.base.BaseViewModel;
+import cz.kinst.jakub.viewmodelbinding.base.ViewInterface;
+import cz.kinst.jakub.viewmodelbinding.databinding.ActivityMainBinding;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -15,23 +17,23 @@ import retrofit.Retrofit;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class MainViewModel extends BaseViewModel implements Callback<WeatherData>
+public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements Callback<WeatherData>
 {
 
 	private WeatherData mWeatherData;
 	private Call<WeatherData> mWeatherCall;
 
 
-	public MainViewModel(Context context)
+	public MainViewModel(ViewInterface viewInterface)
 	{
-		super(context);
+		super(viewInterface);
 	}
 
 
 	@Override
 	public void onViewCreated()
 	{
-		LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+		LocationManager locationManager = (LocationManager) getView().getContext().getSystemService(Context.LOCATION_SERVICE);
 		Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		mWeatherCall = WeatherApiProvider.get().getWeatherData(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), WeatherConfig.WEATHER_APP_ID);
 		mWeatherCall.enqueue(this);

@@ -15,7 +15,7 @@ import cz.kinst.jakub.viewmodelbinding.BR;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment
+public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface
 {
 	private S mViewModel;
 	private T mBinding;

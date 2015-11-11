@@ -1,20 +1,19 @@
 package cz.kinst.jakub.viewmodelbinding.base;
 
-import android.content.Context;
 import android.databinding.BaseObservable;
 
 
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class BaseViewModel extends BaseObservable
+public class BaseViewModel<T> extends BaseObservable
 {
-	private Context mContext;
+	private ViewInterface<T> mView;
 
 
-	public BaseViewModel(Context context)
+	public BaseViewModel(ViewInterface viewInterface)
 	{
-		mContext = context;
+		mView = viewInterface;
 	}
 
 
@@ -33,8 +32,8 @@ public class BaseViewModel extends BaseObservable
 	}
 
 
-	public Context getContext()
+	public ViewInterface<T> getView()
 	{
-		return mContext;
+		return mView;
 	}
 }
