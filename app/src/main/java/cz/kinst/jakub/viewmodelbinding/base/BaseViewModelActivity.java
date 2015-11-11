@@ -20,13 +20,10 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
 
 
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState)
+	public void onDestroy()
 	{
-		super.onCreate(savedInstanceState);
-		mViewModel = onCreateViewModel();
-		mBinding = DataBindingUtil.setContentView(this, getLayoutResource());
-		mBinding.setVariable(BR.viewModel, mViewModel);
-		mViewModel.onViewCreated();
+		mViewModel.onViewDestroy();
+		super.onDestroy();
 	}
 
 
@@ -35,9 +32,6 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
 	{
 		return this;
 	}
-
-
-	protected abstract S onCreateViewModel();
 
 
 	public S getViewModel()
@@ -52,13 +46,19 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
 	}
 
 
-	protected abstract int getLayoutResource();
-
-
 	@Override
-	public void onDestroy()
+	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
-		mViewModel.onViewDestroy();
-		super.onDestroy();
+		super.onCreate(savedInstanceState);
+		mViewModel = onCreateViewModel();
+		mBinding = DataBindingUtil.setContentView(this, getLayoutResource());
+		mBinding.setVariable(BR.viewModel, mViewModel);
+		mViewModel.onViewCreated();
 	}
+
+
+	protected abstract S onCreateViewModel();
+
+
+	protected abstract int getLayoutResource();
 }

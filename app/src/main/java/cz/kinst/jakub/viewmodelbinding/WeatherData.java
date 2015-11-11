@@ -5,6 +5,15 @@ package cz.kinst.jakub.viewmodelbinding;
  */
 public class WeatherData
 {
+	WeatherMain main;
+
+
+	public WeatherMain getMain()
+	{
+		return main;
+	}
+
+
 	public class WeatherMain
 	{
 		double temp;
@@ -14,14 +23,5 @@ public class WeatherData
 		{
 			return temp;
 		}
-	}
-
-
-	WeatherMain main;
-
-
-	public WeatherMain getMain()
-	{
-		return main;
 	}
 }

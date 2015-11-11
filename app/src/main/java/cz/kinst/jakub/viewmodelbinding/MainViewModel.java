@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.Bindable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.view.View;
 
 import cz.kinst.jakub.viewmodelbinding.base.BaseViewModel;
 import cz.kinst.jakub.viewmodelbinding.base.ViewInterface;
@@ -22,6 +23,7 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 
 	private WeatherData mWeatherData;
 	private Call<WeatherData> mWeatherCall;
+	private boolean mLoading = false;
 
 
 	public MainViewModel(ViewInterface viewInterface)
@@ -33,10 +35,18 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 	@Override
 	public void onViewCreated()
 	{
+		refreshWeather(null);
+	}
+
+
+	public void refreshWeather(View view)
+	{
 		LocationManager locationManager = (LocationManager) getView().getContext().getSystemService(Context.LOCATION_SERVICE);
 		Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		mWeatherCall = WeatherApiProvider.get().getWeatherData(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), WeatherConfig.WEATHER_APP_ID);
 		mWeatherCall.enqueue(this);
+		mLoading = true;
+		notifyPropertyChanged(cz.kinst.jakub.viewmodelbinding.BR.loading);
 	}
 
 
@@ -48,11 +58,20 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 	}
 
 
+	@Bindable
+	public boolean isLoading()
+	{
+		return mLoading;
+	}
+
+
 	@Override
 	public void onResponse(Response<WeatherData> response, Retrofit retrofit)
 	{
 		mWeatherData = response.body();
 		notifyPropertyChanged(cz.kinst.jakub.viewmodelbinding.BR.weatherData);
+		mLoading = false;
+		notifyPropertyChanged(cz.kinst.jakub.viewmodelbinding.BR.loading);
 	}
 
 

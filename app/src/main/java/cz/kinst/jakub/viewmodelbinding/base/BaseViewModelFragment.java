@@ -1,5 +1,6 @@
 package cz.kinst.jakub.viewmodelbinding.base;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -32,7 +33,27 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 	}
 
 
-	protected abstract S onCreateViewModel();
+	@Override
+	public void onDestroy()
+	{
+		mViewModel.onViewDestroy();
+		super.onDestroy();
+	}
+
+
+	@Override
+	public void onDetach()
+	{
+		mViewModel.onViewDetach();
+		super.onDetach();
+	}
+
+
+	@Override
+	public Context getContext()
+	{
+		return getActivity();
+	}
 
 
 	@Override
@@ -55,21 +76,8 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 	}
 
 
+	protected abstract S onCreateViewModel();
+
+
 	protected abstract int getLayoutResource();
-
-
-	@Override
-	public void onDestroy()
-	{
-		mViewModel.onViewDestroy();
-		super.onDestroy();
-	}
-
-
-	@Override
-	public void onDetach()
-	{
-		mViewModel.onViewDetach();
-		super.onDetach();
-	}
 }
