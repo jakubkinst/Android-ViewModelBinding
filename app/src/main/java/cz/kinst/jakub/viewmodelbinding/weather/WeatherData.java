@@ -1,4 +1,4 @@
-package cz.kinst.jakub.viewmodelbinding;
+package cz.kinst.jakub.viewmodelbinding.weather;
 
 /**
  * Created by jakubkinst on 10/11/15.

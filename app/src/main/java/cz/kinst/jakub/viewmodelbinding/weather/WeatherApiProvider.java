@@ -1,4 +1,4 @@
-package cz.kinst.jakub.viewmodelbinding;
+package cz.kinst.jakub.viewmodelbinding.weather;
 
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
