@@ -1,21 +1,25 @@
 package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import java.util.UUID;
 
 
-public class ViewModelHelper<R extends BaseViewModel> {
+public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding> {
 
 	private String mScreenId;
 	private R mViewModel;
 	private boolean mModelRemoved;
 	private boolean mOnSaveInstanceCalled;
+	private T mBinding;
 
 
 	/**
@@ -28,6 +32,15 @@ public class ViewModelHelper<R extends BaseViewModel> {
 	 */
 	public void onCreate(ViewInterface view, @Nullable Bundle savedInstanceState,
 						 @Nullable Class<? extends BaseViewModel> viewModelClass) {
+
+		if(view instanceof Activity) {
+			mBinding = DataBindingUtil.setContentView(((Activity) view), view.getLayoutResource());
+		} else if(view instanceof Fragment) {
+			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), view.getLayoutResource(), null, false);
+		} else {
+			throw new IllegalArgumentException("View must be an instance of Activity or Fragment (support-v4).");
+		}
+
 		// no viewmodel for this fragment
 		if(viewModelClass == null) {
 			mViewModel = null;
@@ -52,6 +65,7 @@ public class ViewModelHelper<R extends BaseViewModel> {
 			// detect that the system has killed the app - saved instance is not null, but the model was recreated
 			Log.d("model", "Fragment recreated by system - restoring viewmodel");
 		}
+		mBinding.setVariable(view.getViewModelDataBindingId(), mViewModel);
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated);
 	}
 
@@ -153,6 +167,11 @@ public class ViewModelHelper<R extends BaseViewModel> {
 		if(mViewModel != null) {
 			mOnSaveInstanceCalled = true;
 		}
+	}
+
+
+	public T getBinding() {
+		return mBinding;
 	}
 
 

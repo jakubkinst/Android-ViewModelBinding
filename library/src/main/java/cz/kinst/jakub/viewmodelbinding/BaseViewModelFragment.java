@@ -1,7 +1,6 @@
 package cz.kinst.jakub.viewmodelbinding;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,16 +14,14 @@ import android.view.ViewGroup;
  * Created by jakubkinst on 10/11/15.
  */
 public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface {
-	private final ViewModelHelper<S> mViewModelHelper = new ViewModelHelper<>();
-
-	private T mBinding;
+	private final ViewModelHelper<S, T> mViewModelHelper = new ViewModelHelper<>();
 
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false);
-		return mBinding.getRoot();
+		mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
+		return mViewModelHelper.getBinding().getRoot();
 	}
 
 
@@ -43,14 +40,6 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 
 	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
-		mBinding.setVariable(getViewModelDataBindingId(), getViewModel());
-	}
-
-
-	@Override
 	public Context getContext() {
 		return getActivity();
 	}
@@ -62,11 +51,10 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 
 	public T getBinding() {
-		return mBinding;
+		return mViewModelHelper.getBinding();
 	}
 
 
 	protected abstract Class<? extends BaseViewModel> getViewModelClass();
 
-	protected abstract int getLayoutResource();
 }

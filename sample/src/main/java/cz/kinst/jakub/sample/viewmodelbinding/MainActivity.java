@@ -12,7 +12,7 @@ import cz.kinst.jakub.viewmodelbinding.BaseViewModelActivity;
 public class MainActivity extends BaseViewModelActivity<ActivityMainBinding, MainViewModel> {
 
 	@Override
-	protected int getLayoutResource() {
+	public int getLayoutResource() {
 		return R.layout.activity_main;
 	}
 
