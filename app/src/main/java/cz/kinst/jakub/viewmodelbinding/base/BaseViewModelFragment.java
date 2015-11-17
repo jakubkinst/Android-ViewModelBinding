@@ -18,15 +18,17 @@ import cz.kinst.jakub.viewmodelbinding.BR;
  */
 public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface
 {
+	private final ViewModelHelper<S> mViewModeHelper = new ViewModelHelper<>();
+
 	private S mViewModel;
 	private T mBinding;
 
-
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		mViewModel = onCreateViewModel();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		mViewModeHelper.onCreate(savedInstanceState, getViewModelClass(), getArguments());
+		mViewModel = mViewModeHelper.getViewModel();
+		bindView();
 		mBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false);
 		mBinding.setVariable(BR.viewModel, mViewModel);
 		return mBinding.getRoot();
@@ -34,50 +36,48 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 
 	@Override
-	public void onDestroy()
-	{
-		mViewModel.onViewDestroy();
+	public void onDestroyView() {
+		mViewModeHelper.onDestroyView(this);
+		super.onDestroyView();
+	}
+
+
+	@Override
+	public void onDestroy() {
+		mViewModeHelper.onDestroyView(this);
 		super.onDestroy();
 	}
 
 
 	@Override
-	public void onDetach()
-	{
-		mViewModel.onViewDetach();
-		super.onDetach();
-	}
-
-
-	@Override
-	public Context getContext()
-	{
+	public Context getContext() {
 		return getActivity();
 	}
 
 
 	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-	{
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mViewModel.onViewCreated();
 	}
 
 
-	public S getViewModel()
-	{
+	public S getViewModel() {
 		return mViewModel;
 	}
 
 
-	public T getBinding()
-	{
+	public ViewModelHelper<S> getViewModeHelper() {
+		return mViewModeHelper;
+	}
+
+
+	public T getBinding() {
 		return mBinding;
 	}
 
 
-	protected abstract S onCreateViewModel();
-
+	protected abstract Class<? extends BaseViewModel> getViewModelClass();
 
 	protected abstract int getLayoutResource();
 }

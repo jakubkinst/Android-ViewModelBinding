@@ -15,7 +15,7 @@ public class WeatherApiProvider
 	private static WeatherApiInterface sInstance;
 
 
-	interface WeatherApiInterface
+	public interface WeatherApiInterface
 	{
 		@GET("/data/2.5/weather")
 		Call<WeatherData> getWeatherData(@Query("lat") double latitude, @Query("lon") double longitude, @Query("appid") String appId);

@@ -15,50 +15,53 @@ import cz.kinst.jakub.viewmodelbinding.BR;
  */
 public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends BaseViewModel<T>> extends AppCompatActivity implements ViewInterface
 {
+	private final ViewModelHelper<S> mViewModeHelper = new ViewModelHelper<>();
+
 	private S mViewModel;
 	private T mBinding;
 
 
 	@Override
-	public void onDestroy()
-	{
+	public void onDestroy() {
 		mViewModel.onViewDestroy();
 		super.onDestroy();
 	}
 
 
 	@Override
-	public Context getContext()
-	{
+	public Context getContext() {
 		return this;
 	}
 
 
-	public S getViewModel()
-	{
+	public S getViewModel() {
 		return mViewModel;
 	}
 
 
-	public T getBinding()
-	{
+	public T getBinding() {
 		return mBinding;
 	}
 
 
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState)
-	{
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mViewModel = onCreateViewModel();
+		if(getIntent() != null) {
+			mViewModeHelper.onCreate(savedInstanceState, getViewModelClass(), getIntent().getExtras());
+		} else {
+			mViewModeHelper.onCreate(savedInstanceState, getViewModelClass(), null);
+		}
+		mViewModel = mViewModeHelper.getViewModel();
+		bindView();
 		mBinding = DataBindingUtil.setContentView(this, getLayoutResource());
 		mBinding.setVariable(BR.viewModel, mViewModel);
 		mViewModel.onViewCreated();
 	}
 
 
-	protected abstract S onCreateViewModel();
-
-
 	protected abstract int getLayoutResource();
+
+
+	protected abstract Class<? extends BaseViewModel> getViewModelClass();
 }

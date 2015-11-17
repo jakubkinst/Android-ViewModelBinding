@@ -31,7 +31,6 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 
 	public MainViewModel(ViewInterface viewInterface)
 	{
-		super(viewInterface);
 	}
 
 
