@@ -29,9 +29,8 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 	private boolean mLoading = false;
 
 
-	public MainViewModel(ViewInterface viewInterface)
+	public MainViewModel()
 	{
-		super(viewInterface);
 	}
 
 

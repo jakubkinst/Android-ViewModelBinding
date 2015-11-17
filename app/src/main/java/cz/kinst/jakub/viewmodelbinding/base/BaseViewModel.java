@@ -1,6 +1,7 @@
 package cz.kinst.jakub.viewmodelbinding.base;
 
 import android.databinding.BaseObservable;
+import android.support.annotation.Nullable;
 
 
 /**
@@ -8,32 +9,58 @@ import android.databinding.BaseObservable;
  */
 public class BaseViewModel<T> extends BaseObservable
 {
+	@Nullable
 	private ViewInterface<T> mView;
+	private String mUniqueIdentifier;
 
 
-	public BaseViewModel(ViewInterface viewInterface)
-	{
+	public BaseViewModel() {
+	}
+
+
+	public void bindView(ViewInterface viewInterface) {
 		mView = viewInterface;
 	}
 
 
-	public void onViewDestroy()
-	{
+	@SuppressWarnings("EmptyMethod")
+	public void onViewDestroy() {
+		mView = null;
 	}
 
 
-	public void onViewDetach()
-	{
+	@SuppressWarnings("EmptyMethod")
+	public void onViewDetach() {
+		mView = null;
 	}
 
 
-	public void onViewCreated()
-	{
+	@SuppressWarnings("EmptyMethod")
+	public void onViewCreated() {
 	}
 
 
-	public ViewInterface<T> getView()
-	{
+	@SuppressWarnings("EmptyMethod")
+	public void onModelRemoved(){
+		mView = null;
+	}
+
+	@Nullable
+	public ViewInterface<T> getView() {
 		return mView;
+	}
+
+
+	/**
+	 * @return An app unique identifier for the current viewmodel instance (will be kept during orientation
+	 * change). This identifier will be reset in case the corresponding activity is killed.
+	 */
+	public String getUniqueIdentifier() {
+		return mUniqueIdentifier;
+	}
+
+
+	void setUniqueIdentifier(String uniqueIdentifier) {
+		mUniqueIdentifier = uniqueIdentifier;
 	}
 }
