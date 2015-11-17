@@ -16,36 +16,39 @@ import cz.kinst.jakub.viewmodelbinding.BR;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface
-{
-	private final ViewModelHelper<S> mViewModeHelper = new ViewModelHelper<>();
+public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface {
+	private final ViewModelHelper<S> mViewModelHelper = new ViewModelHelper<>();
 
-	private S mViewModel;
 	private T mBinding;
+
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mViewModeHelper.onCreate(savedInstanceState, getViewModelClass(), getArguments());
-		mViewModel = mViewModeHelper.getViewModel();
-		bindView();
 		mBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false);
-		mBinding.setVariable(BR.viewModel, mViewModel);
 		return mBinding.getRoot();
 	}
 
 
 	@Override
 	public void onDestroyView() {
-		mViewModeHelper.onDestroyView(this);
+		mViewModelHelper.onDestroyView(this);
 		super.onDestroyView();
 	}
 
 
 	@Override
 	public void onDestroy() {
-		mViewModeHelper.onDestroyView(this);
+		mViewModelHelper.onDestroyView(this);
 		super.onDestroy();
+	}
+
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
+		mBinding.setVariable(BR.viewModel, getViewModel());
 	}
 
 
@@ -55,20 +58,8 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 	}
 
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		mViewModel.onViewCreated();
-	}
-
-
 	public S getViewModel() {
-		return mViewModel;
-	}
-
-
-	public ViewModelHelper<S> getViewModeHelper() {
-		return mViewModeHelper;
+		return mViewModelHelper.getViewModel();
 	}
 
 

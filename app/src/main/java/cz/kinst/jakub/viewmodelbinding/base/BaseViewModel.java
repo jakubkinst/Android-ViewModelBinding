@@ -7,8 +7,7 @@ import android.support.annotation.Nullable;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class BaseViewModel<T> extends BaseObservable
-{
+public class BaseViewModel<T> extends BaseObservable {
 	@Nullable
 	private ViewInterface<T> mView;
 	private String mUniqueIdentifier;
@@ -24,30 +23,30 @@ public class BaseViewModel<T> extends BaseObservable
 
 
 	@SuppressWarnings("EmptyMethod")
-	public void onViewDestroy() {
+	public void onViewDetached(boolean finalDetachment) {
 		mView = null;
 	}
 
 
 	@SuppressWarnings("EmptyMethod")
-	public void onViewDetach() {
-		mView = null;
+	public void onViewAttached(boolean firstAttachment) {
 	}
 
 
 	@SuppressWarnings("EmptyMethod")
-	public void onViewCreated() {
-	}
-
-
-	@SuppressWarnings("EmptyMethod")
-	public void onModelRemoved(){
+	public void onModelRemoved() {
 		mView = null;
 	}
+
 
 	@Nullable
 	public ViewInterface<T> getView() {
 		return mView;
+	}
+
+
+	public boolean hasViewAttached() {
+		return mView != null;
 	}
 
 

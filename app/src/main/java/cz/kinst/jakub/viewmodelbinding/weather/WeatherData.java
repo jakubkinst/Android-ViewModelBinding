@@ -3,24 +3,20 @@ package cz.kinst.jakub.viewmodelbinding.weather;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class WeatherData
-{
+public class WeatherData {
 	WeatherMain main;
 
 
-	public WeatherMain getMain()
-	{
+	public WeatherMain getMain() {
 		return main;
 	}
 
 
-	public class WeatherMain
-	{
+	public class WeatherMain {
 		double temp;
 
 
-		public double getTemp()
-		{
+		public double getTemp() {
 			return temp;
 		}
 	}

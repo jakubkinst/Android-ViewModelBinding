@@ -7,7 +7,6 @@ import android.location.LocationManager;
 import android.view.View;
 
 import cz.kinst.jakub.viewmodelbinding.base.BaseViewModel;
-import cz.kinst.jakub.viewmodelbinding.base.ViewInterface;
 import cz.kinst.jakub.viewmodelbinding.databinding.ActivityMainBinding;
 import cz.kinst.jakub.viewmodelbinding.weather.WeatherApiProvider;
 import cz.kinst.jakub.viewmodelbinding.weather.WeatherConfig;
@@ -21,30 +20,30 @@ import retrofit.Retrofit;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements Callback<WeatherData>
-{
+public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements Callback<WeatherData> {
 
 	private WeatherData mWeatherData;
 	private Call<WeatherData> mWeatherCall;
 	private boolean mLoading = false;
 
 
-	public MainViewModel()
-	{
+	public MainViewModel() {
 	}
 
 
 	@Override
-	public void onViewCreated()
-	{
-		refreshWeather(null);
+	public void onViewAttached(boolean firstAttachment) {
+		super.onViewAttached(firstAttachment);
+		if(firstAttachment)
+			refreshWeather(null);
 	}
 
 
-	public void refreshWeather(View view)
-	{
+	public void refreshWeather(View view) {
 		LocationManager locationManager = (LocationManager) getView().getContext().getSystemService(Context.LOCATION_SERVICE);
 		Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		if(mWeatherCall != null)
+			mWeatherCall.cancel();
 		mWeatherCall = WeatherApiProvider.get().getWeatherData(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), WeatherConfig.WEATHER_APP_ID);
 		mWeatherCall.enqueue(this);
 		mLoading = true;
@@ -53,23 +52,20 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 
 
 	@Override
-	public void onViewDestroy()
-	{
+	public void onModelRemoved() {
+		super.onModelRemoved();
 		mWeatherCall.cancel();
-		super.onViewDestroy();
 	}
 
 
 	@Bindable
-	public boolean isLoading()
-	{
+	public boolean isLoading() {
 		return mLoading;
 	}
 
 
 	@Override
-	public void onResponse(Response<WeatherData> response, Retrofit retrofit)
-	{
+	public void onResponse(Response<WeatherData> response, Retrofit retrofit) {
 		mWeatherData = response.body();
 		notifyPropertyChanged(cz.kinst.jakub.viewmodelbinding.BR.weatherData);
 		mLoading = false;
@@ -78,15 +74,13 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> implements
 
 
 	@Bindable
-	public WeatherData getWeatherData()
-	{
+	public WeatherData getWeatherData() {
 		return mWeatherData;
 	}
 
 
 	@Override
-	public void onFailure(Throwable t)
-	{
+	public void onFailure(Throwable t) {
 
 	}
 }
