@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+
+// To generate release AAR  - run `./gradlew clean build generateRelease`
+// Based on https://medium.com/@tigr/how-to-publish-your-android-studio-library-to-jcenter-5384172c4739
+ext {
+	PUBLISH_GROUP_ID = 'cz.kinst.jakub'
+	PUBLISH_ARTIFACT_ID = 'viewmodelbinding'
+	PUBLISH_VERSION = '1.0'
+}
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+
+android {
+	compileSdkVersion 23
+	buildToolsVersion "23.0.2"
+
+	defaultConfig {
+		minSdkVersion 15
+		targetSdkVersion 23
+		versionCode 1
+		versionName PUBLISH_VERSION
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+	dataBinding {
+		enabled = true;
+	}
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+	testCompile 'junit:junit:4.12'
+	compile 'com.android.support:appcompat-v7:23.1.1'
+}
+
+
