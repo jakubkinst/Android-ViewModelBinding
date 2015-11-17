@@ -12,7 +12,8 @@ import android.support.v7.app.AppCompatActivity;
  * Created by jakubkinst on 10/11/15.
  */
 public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends BaseViewModel<T>> extends AppCompatActivity implements ViewInterface {
-	private final ViewModelHelper<S,T> mViewModelHelper = new ViewModelHelper<>();
+	private final ViewModelHelper<S, T> mViewModelHelper = new ViewModelHelper<>();
+
 
 	@Override
 	public void onDestroy() {
@@ -49,6 +50,7 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
 		super.onCreate(savedInstanceState);
 		mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
 	}
+
 
 	protected abstract Class<? extends BaseViewModel> getViewModelClass();
 }
