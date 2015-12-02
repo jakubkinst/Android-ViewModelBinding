@@ -14,7 +14,15 @@ import android.view.ViewGroup;
  * Created by jakubkinst on 10/11/15.
  */
 public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface {
+
 	private final ViewModelHelper<S, T> mViewModelHelper = new ViewModelHelper<>();
+
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
+		super.onCreate(savedInstanceState);
+	}
 
 
 	@Nullable
@@ -34,8 +42,15 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 	@Override
 	public void onDestroy() {
-		mViewModelHelper.onDestroyView(this);
+		mViewModelHelper.onDestroy(this);
 		super.onDestroy();
+	}
+
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		mViewModelHelper.onSaveInstanceState(outState);
+		super.onSaveInstanceState(outState);
 	}
 
 
@@ -56,5 +71,4 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 
 	protected abstract Class<? extends BaseViewModel> getViewModelClass();
-
 }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * Create and keep this class inside your Activity. Store it
  * in {@link android.support.v4.app.FragmentActivity#onRetainCustomNonConfigurationInstance()
- * and restore in {@link android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)} before
+ * and restore in {@link android.support.v4.app.Activity#onCreate(android.os.Bundle)} before
  * calling the super implemenentation.
  */
 public class ViewModelProvider {

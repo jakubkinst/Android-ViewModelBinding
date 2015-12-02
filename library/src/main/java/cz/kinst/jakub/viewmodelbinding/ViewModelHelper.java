@@ -20,7 +20,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	private boolean mModelRemoved;
 	private boolean mOnSaveInstanceCalled;
 	private T mBinding;
-
+	private boolean mCreated;
 
 	/**
 	 * Call from {@link Activity#onCreate(Bundle)} or
@@ -32,7 +32,8 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 */
 	public void onCreate(ViewInterface view, @Nullable Bundle savedInstanceState,
 						 @Nullable Class<? extends BaseViewModel> viewModelClass) {
-
+		if(mCreated) return;
+		mCreated = true;
 		if(view instanceof Activity) {
 			mBinding = DataBindingUtil.setContentView(((Activity) view), view.getLayoutResource());
 		} else if(view instanceof Fragment) {
