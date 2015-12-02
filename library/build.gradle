@@ -6,9 +6,9 @@ apply plugin: 'com.android.library'
 ext {
 	PUBLISH_GROUP_ID = 'cz.kinst.jakub'
 	PUBLISH_ARTIFACT_ID = 'viewmodelbinding'
-	PUBLISH_VERSION = '1.0'
+	PUBLISH_VERSION = '0.3'
 }
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+apply from: 'release.gradle'
 
 android {
 	compileSdkVersion 23
@@ -28,6 +28,9 @@ android {
 	}
 	dataBinding {
 		enabled = true;
+	}
+	lintOptions {
+		abortOnError false
 	}
 }
 
