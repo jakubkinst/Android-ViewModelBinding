@@ -15,6 +15,7 @@ import java.util.UUID;
 
 public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding> {
 
+	private static final String INSTANCE_STATE_VIEW_ID = "____view_id";
 	private String mScreenId;
 	private R mViewModel;
 	private boolean mModelRemoved;
@@ -52,7 +53,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 		if(savedInstanceState == null) {
 			mScreenId = UUID.randomUUID().toString();
 		} else {
-			mScreenId = savedInstanceState.getString("identifier");
+			mScreenId = savedInstanceState.getString(INSTANCE_STATE_VIEW_ID);
 			mOnSaveInstanceCalled = false;
 		}
 
@@ -164,7 +165,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 * @param bundle
 	 */
 	public void onSaveInstanceState(@NonNull Bundle bundle) {
-		bundle.putString("identifier", mScreenId);
+		bundle.putString(INSTANCE_STATE_VIEW_ID, mScreenId);
 		if(mViewModel != null) {
 			mOnSaveInstanceCalled = true;
 		}

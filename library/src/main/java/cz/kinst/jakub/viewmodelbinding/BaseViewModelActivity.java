@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -12,49 +11,57 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends BaseViewModel<T>> extends AppCompatActivity implements ViewInterface {
+public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends BaseViewModel<T>> extends AppCompatActivity implements ViewInterface
+{
 	private final ViewModelHelper<S, T> mViewModelHelper = new ViewModelHelper<>();
 
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		mViewModelHelper.onDestroy(this);
 		super.onDestroy();
 	}
 
 
 	@Override
-	public Context getContext() {
+	public Context getContext()
+	{
 		return getActivity();
 	}
 
 
 	@Override
-	public Activity getActivity() {
+	public Activity getActivity()
+	{
 		return this;
 	}
 
 
-	public S getViewModel() {
+	public S getViewModel()
+	{
 		return mViewModelHelper.getViewModel();
 	}
 
 
 	@Override
-	public T getBinding() {
+	public T getBinding()
+	{
 		return mViewModelHelper.getBinding();
 	}
 
 
 	@Override
-	public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+	protected void onSaveInstanceState(Bundle outState)
+	{
 		mViewModelHelper.onSaveInstanceState(outState);
-		super.onSaveInstanceState(outState, outPersistentState);
+		super.onSaveInstanceState(outState);
 	}
 
 
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
+	protected void onCreate(@Nullable Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
 	}
