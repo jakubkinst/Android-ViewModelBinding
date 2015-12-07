@@ -15,7 +15,6 @@ import java.util.UUID;
 
 public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding> {
 
-	private static final String INSTANCE_STATE_VIEW_ID = "____view_id";
 	private String mScreenId;
 	private R mViewModel;
 	private boolean mModelRemoved;
@@ -50,40 +49,23 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			return;
 		}
 
-		// screen (activity/fragment) created for first time, attach unique ID
-		if(savedInstanceState == null) {
-			mScreenId = UUID.randomUUID().toString();
-		} else {
-			mScreenId = savedInstanceState.getString(INSTANCE_STATE_VIEW_ID);
-			mOnSaveInstanceCalled = false;
+		if(mScreenId == null) {
+			// screen (activity/fragment) created for first time, attach unique ID
+			if(savedInstanceState == null)
+				mScreenId = UUID.randomUUID().toString();
+			else
+				mScreenId = savedInstanceState.getString(viewModelClass.getName() + "identifier");
 		}
-
 		// get model instance for this screen
 		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mScreenId, viewModelClass);
 		//noinspection unchecked
 		mViewModel = (R) viewModelWrapper.viewModel;
+		mOnSaveInstanceCalled = false;
+
 
 		mViewModel.bindView(view);
-		if(viewModelWrapper.wasCreated) {
-			// detect that the system has killed the app - saved instance is not null, but the model was recreated
-			Log.d("model", "Fragment recreated by system - restoring viewmodel");
-		}
 		mBinding.setVariable(view.getViewModelDataBindingId(), mViewModel);
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated);
-	}
-
-
-	public void onResume() {
-		if(mViewModel != null) {
-			mViewModel.onResume();
-		}
-	}
-
-
-	public void onPause() {
-		if(mViewModel != null) {
-			mViewModel.onPause();
-		}
 	}
 
 
@@ -102,8 +84,10 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 		if(fragment.getActivity() != null && fragment.getActivity().isFinishing()) {
 			mViewModel.onViewDetached(true);
 			removeViewModel();
-		} else
+		} else {
 			mViewModel.onViewDetached(false);
+			mCreated = false;
+		}
 	}
 
 
@@ -114,9 +98,6 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 * @param fragment
 	 */
 	public void onDestroy(@NonNull Fragment fragment) {
-
-		// TODO: What is this? Why is it not called anywhere?
-
 		if(mViewModel == null) {
 			//no viewmodel for this fragment
 			return;
@@ -126,9 +107,10 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 		} else if(fragment.isRemoving() && !mOnSaveInstanceCalled) {
 			// The fragment can be still in backstack even if isRemoving() is true.
 			// We check mOnSaveInstanceCalled - if this was not called then the fragment is totally removed.
-			Log.d("mode", "Removing viewmodel - fragment replaced");
+			Log.d("model", "Removing viewmodel - fragment replaced");
 			removeViewModel();
 		}
+		mCreated = false;
 	}
 
 
@@ -140,7 +122,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 */
 	public void onDestroy(@NonNull Activity activity) {
 		if(mViewModel == null) {
-			//no viewmodel for this fragment
+			//no viewmodel for this activity
 			return;
 		}
 		if(activity.isFinishing()) {
@@ -148,6 +130,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			removeViewModel();
 		} else
 			mViewModel.onViewDetached(false);
+		mCreated = false;
 	}
 
 
@@ -180,9 +163,23 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 * @param bundle
 	 */
 	public void onSaveInstanceState(@NonNull Bundle bundle) {
-		bundle.putString(INSTANCE_STATE_VIEW_ID, mScreenId);
+		bundle.putString(mViewModel.getClass().getName() + "identifier", mScreenId);
 		if(mViewModel != null) {
 			mOnSaveInstanceCalled = true;
+		}
+	}
+
+
+	public void onResume() {
+		if(mViewModel != null) {
+			mViewModel.onResume();
+		}
+	}
+
+
+	public void onPause() {
+		if(mViewModel != null) {
+			mViewModel.onPause();
 		}
 	}
 
@@ -197,6 +194,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			ViewModelProvider.getInstance().remove(mScreenId);
 			mViewModel.onModelRemoved();
 			mModelRemoved = true;
+			mCreated = false;
 		}
 	}
 }

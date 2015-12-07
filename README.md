@@ -5,7 +5,7 @@ A lightweight library aiming to speed up Android app development by leveraging t
 
 ## Installation
 ### Gradle/Maven (jcenter)
-    compile 'cz.kinst.jakub:viewmodelbinding:0.3.1'
+    compile 'cz.kinst.jakub:viewmodelbinding:0.4'
     
 ## Usage
 
