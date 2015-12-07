@@ -23,6 +23,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	private T mBinding;
 	private boolean mCreated;
 
+
 	/**
 	 * Call from {@link Activity#onCreate(Bundle)} or
 	 * {@link Fragment#onCreate(Bundle)}
@@ -69,6 +70,20 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 		}
 		mBinding.setVariable(view.getViewModelDataBindingId(), mViewModel);
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated);
+	}
+
+
+	public void onResume() {
+		if(mViewModel != null) {
+			mViewModel.onResume();
+		}
+	}
+
+
+	public void onPause() {
+		if(mViewModel != null) {
+			mViewModel.onPause();
+		}
 	}
 
 

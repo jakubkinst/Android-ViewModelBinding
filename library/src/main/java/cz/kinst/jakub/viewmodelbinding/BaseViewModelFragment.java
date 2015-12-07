@@ -33,6 +33,22 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 	}
 
 
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mViewModelHelper.onResume();
+	}
+
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		mViewModelHelper.onPause();
+	}
+
+
+
 	@Override
 	public void onDestroyView() {
 		mViewModelHelper.onDestroyView(this);
