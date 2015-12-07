@@ -31,8 +31,4 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 	compile project(':library')
 	compile 'com.android.support:appcompat-v7:23.1.1'
-	compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-	compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-	compile 'cz.kinst.jakub:stateful-layout:1.1.1'
-
 }

@@ -2,4 +2,6 @@
 	<string name="app_name">ViewModelBinding</string>
 	<string name="temperature">%s°</string>
 	<string name="refresh">Refresh</string>
+	<string name="hello">Hello, %s!</string>
+	<string name="hint_enter_your_name">Enter your name</string>
 </resources>
