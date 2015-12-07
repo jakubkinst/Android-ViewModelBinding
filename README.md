@@ -12,93 +12,99 @@ A lightweight library aiming to speed up Android app development by leveraging t
 ### Activity
 `MainActivity.java`
 
-    public class MainActivity extends BaseViewModelActivity<ActivityMainBinding, MainViewModel> {
-    
-    	@Override
-    	public int getLayoutResource() {
-    		return R.layout.activity_main;
-    	}
-    
-    
-    	@Override
-    	protected Class<? extends BaseViewModel> getViewModelClass() {
-    		return MainViewModel.class;
-    	}
-    
-    
-    	@Override
-    	public int getViewModelDataBindingId() {
-    		return BR.viewModel;
-    	}
-    }
+```java
+public class MainActivity extends BaseViewModelActivity<ActivityMainBinding, MainViewModel> {
+
+	@Override
+	public int getLayoutResource() {
+		return R.layout.activity_main;
+	}
+
+
+	@Override
+	protected Class<? extends BaseViewModel> getViewModelClass() {
+		return MainViewModel.class;
+	}
+
+
+	@Override
+	public int getViewModelDataBindingId() {
+		return BR.viewModel;
+	}
+}
+```
     
 `activity_main.xml`
 
-    <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    		xmlns:tools="http://schemas.android.com/tools">
-    
-    	<data>
-    
-    		<variable
-    			name="viewModel"
-    			type="cz.kinst.jakub.sample.viewmodelbinding.MainViewModel"/>
-    	</data>
-    
-    	<LinearLayout
-    		android:layout_width="match_parent"
-    		android:layout_height="match_parent"
-    		android:orientation="vertical">
-    
-    		<EditText
-    			android:id="@+id/name_edit_text"
-    			android:layout_width="match_parent"
-    			android:layout_height="wrap_content"
-    			android:hint="@string/hint_enter_your_name"/>
-    
-    		<Button
-    			android:layout_width="match_parent"
-    			android:layout_height="wrap_content"
-    			android:onClick="@{viewModel.onClickGreetButton}"
-    			android:text="Greet"/>
-    
-    		<TextView
-    			android:layout_width="match_parent"
-    			android:layout_height="wrap_content"
-    			android:gravity="center"
-    			android:text="@{viewModel.name != null &amp;&amp; !viewModel.name.empty ? @string/hello(viewModel.name) : ``}"
-    			tools:text="@string/hello"/>
-    	</LinearLayout>
-    </layout>
+```xml
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="cz.kinst.jakub.sample.viewmodelbinding.MainViewModel"/>
+	</data>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<EditText
+			android:id="@+id/name_edit_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/hint_enter_your_name"/>
+
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="@{viewModel.onClickGreetButton}"
+			android:text="Greet"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="@{viewModel.name != null &amp;&amp; !viewModel.name.empty ? @string/hello(viewModel.name) : ``}"
+			tools:text="@string/hello"/>
+	</LinearLayout>
+</layout>
+```
 
     
 ### ViewModel
 `MainViewModel.java`
 
-	public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
-    
-    	public ObservableField<String> name = new ObservableField<>();
-    
-    
-    	@Override
-    	public void onViewAttached(boolean firstAttachment) {
-    		super.onViewAttached(firstAttachment);
-    		if(firstAttachment) {
-    			// Do API calls
-    		}
-    	}
-    
-    
-    	public void onClickGreetButton(View v) {
-    		name.set(getView().getBinding().nameEditText.getText().toString());
-    	}
-    
-    
-    	@Override
-    	public void onModelRemoved() {
-    		super.onModelRemoved();
-    		// Cancel API calls
-    	}
-    }
+```java
+public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
+
+	public ObservableField<String> name = new ObservableField<>();
+
+
+	@Override
+	public void onViewAttached(boolean firstAttachment) {
+		super.onViewAttached(firstAttachment);
+		if(firstAttachment) {
+			// Do API calls
+		}
+	}
+
+
+	public void onClickGreetButton(View v) {
+		name.set(getView().getBinding().nameEditText.getText().toString());
+	}
+
+
+	@Override
+	public void onModelRemoved() {
+		super.onModelRemoved();
+		// Cancel API calls
+	}
+}
+```
 
 ### Real usage
 For a more complex example of using this approach, see [Weather 2.0](https://github.com/jakubkinst/Weather-2.0) project.
