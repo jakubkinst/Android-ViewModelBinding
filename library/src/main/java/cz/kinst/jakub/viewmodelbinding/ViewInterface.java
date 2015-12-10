@@ -2,6 +2,7 @@ package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 
 
@@ -12,6 +13,7 @@ public interface ViewInterface<T> {
 	Context getContext();
 	T getBinding();
 	Activity getActivity();
+	Bundle getBundle();
 	int getViewModelDataBindingId();
 	@LayoutRes
 	int getLayoutResource();
