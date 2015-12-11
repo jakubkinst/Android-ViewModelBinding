@@ -1,6 +1,7 @@
 package cz.kinst.jakub.viewmodelbinding;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -72,6 +73,14 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
     public void onSaveInstanceState(Bundle outState) {
         mViewModelHelper.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(getViewModel() != null) {
+            getViewModel().onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 

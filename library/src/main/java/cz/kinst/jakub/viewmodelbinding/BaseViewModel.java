@@ -98,4 +98,8 @@ public class BaseViewModel<T> extends BaseObservable {
             ((Fragment) mView).startActivityForResult(intent, requestCode);
         }
     }
+
+    @SuppressWarnings("EmptyMethod")
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
 }

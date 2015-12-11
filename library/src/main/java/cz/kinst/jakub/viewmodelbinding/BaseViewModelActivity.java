@@ -2,6 +2,7 @@ package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -76,6 +77,14 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
     protected void onPause() {
         super.onPause();
         mViewModelHelper.onPause();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(getViewModel() != null) {
+            getViewModel().onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 
