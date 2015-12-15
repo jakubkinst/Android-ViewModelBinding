@@ -19,7 +19,7 @@ public class ViewModelBindingConfig {
 	 *
 	 * @param layoutResource        Layout resource ID
 	 * @param viewModelClass        ViewModel class
-	 * @param viewModelVariableName Data Binding variable name for injecting the ViewModel - use generated id (e.g. BR.viewModel)
+	 * @param viewModelVariableName Data Binding variable name for injecting the ViewModel - use generated id (e.g. BR.mViewModel)
 	 */
 	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class viewModelClass, int viewModelVariableName) {
 		mLayoutResource = layoutResource;

@@ -1,26 +1,15 @@
 package cz.kinst.jakub.viewmodelbinding;
 
+import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 
 
-/**
- * Create and keep this class inside your Activity. Store it
- * in {@link android.support.v4.app.FragmentActivity#onRetainCustomNonConfigurationInstance()
- * and restore in {@link android.support.v4.app.Activity#onCreate(android.os.Bundle)} before
- * calling the super implemenentation.
- */
 public class ViewModelProvider {
 
-	private static final ViewModelProvider sInstance = new ViewModelProvider();
-
-	private final HashMap<String, BaseViewModel<? extends ViewInterface>> mViewModelCache;
-
-
-	public static ViewModelProvider getInstance() {
-		return sInstance;
-	}
+	private static ViewModelProvider sInstance;
+	private final HashMap<String, BaseViewModel<? extends ViewDataBinding>> mViewModelCache;
 
 
 	private ViewModelProvider() {
@@ -28,39 +17,56 @@ public class ViewModelProvider {
 	}
 
 
-	public synchronized void remove(String modeIdentifier) {
-		mViewModelCache.remove(modeIdentifier);
+	public static ViewModelProvider getInstance() {
+		if(sInstance == null)
+			sInstance = new ViewModelProvider();
+		return sInstance;
+	}
+
+
+	public synchronized void removeViewModel(String viewModelId) {
+		mViewModelCache.remove(viewModelId);
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@NonNull
-	public synchronized <T extends ViewInterface> ViewModelWrapper<T> getViewModel(String modelIdentifier, @NonNull Class<? extends BaseViewModel> viewModelClass) {
-		BaseViewModel<T> instance = (BaseViewModel<T>) mViewModelCache.get(modelIdentifier);
-		if(instance != null) {
-			return new ViewModelWrapper<>(instance, false);
-		}
+	public synchronized ViewModelWrapper getViewModel(String viewModelId, @NonNull Class<? extends BaseViewModel> viewModelClass) {
+		BaseViewModel instance = mViewModelCache.get(viewModelId);
+		if(instance != null)
+			return new ViewModelWrapper(instance, false);
 
 		try {
 			instance = viewModelClass.newInstance();
-			instance.setUniqueIdentifier(modelIdentifier);
-			mViewModelCache.put(modelIdentifier, instance);
-			return new ViewModelWrapper<>(instance, true);
+			instance.setUniqueIdentifier(viewModelId);
+			mViewModelCache.put(viewModelId, instance);
+			return new ViewModelWrapper(instance, true);
 		} catch(Exception ex) {
 			throw new RuntimeException(ex);
 		}
 	}
 
 
-	public static class ViewModelWrapper<T extends ViewInterface> {
+	public static class ViewModelWrapper {
 		@NonNull
-		public final BaseViewModel<T> viewModel;
-		public final boolean wasCreated;
+		private final BaseViewModel mViewModel;
+		private final boolean mWasCreated;
 
 
-		private ViewModelWrapper(@NonNull BaseViewModel<T> mViewModel, boolean mWasCreated) {
-			this.viewModel = mViewModel;
-			this.wasCreated = mWasCreated;
+		private ViewModelWrapper(@NonNull BaseViewModel viewModel, boolean wasCreated) {
+			this.mViewModel = viewModel;
+			this.mWasCreated = wasCreated;
+		}
+
+
+		@NonNull
+		public BaseViewModel getViewModel() {
+			return mViewModel;
+		}
+
+
+		public boolean wasCreated() {
+			return mWasCreated;
 		}
 	}
 }

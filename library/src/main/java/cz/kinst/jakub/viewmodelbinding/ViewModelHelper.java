@@ -15,12 +15,12 @@ import java.util.UUID;
 
 public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding> {
 
-	private String mScreenId;
+	private String mViewModelId;
 	private R mViewModel;
 	private boolean mModelRemoved;
 	private boolean mOnSaveInstanceCalled;
 	private T mBinding;
-	private boolean mCreated;
+	private boolean mAlreadyCreated;
 
 
 	/**
@@ -34,8 +34,8 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 		ViewModelBindingConfig config = view.getViewModelBindingConfig();
 		if(view.getViewModelBindingConfig() == null)
 			throw new IllegalStateException("View not configured.");
-		if(mCreated) return;
-		mCreated = true;
+		if(mAlreadyCreated) return;
+		mAlreadyCreated = true;
 		if(view instanceof Activity) {
 			mBinding = DataBindingUtil.setContentView(((Activity) view), config.getLayoutResource());
 		} else if(view instanceof Fragment) {
@@ -50,37 +50,33 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			return;
 		}
 
-		if(mScreenId == null) {
+		if(mViewModelId == null) {
 			// screen (activity/fragment) created for first time, attach unique ID
 			if(savedInstanceState == null)
-				mScreenId = UUID.randomUUID().toString();
+				mViewModelId = UUID.randomUUID().toString();
 			else
-				mScreenId = savedInstanceState.getString(config.getViewModelClass().getName() + "identifier");
+				mViewModelId = savedInstanceState.getString(config.getViewModelClass().getName() + "identifier");
 		}
 		// get model instance for this screen
-		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mScreenId, config.getViewModelClass());
+		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mViewModelId, config.getViewModelClass());
 		//noinspection unchecked
-		mViewModel = (R) viewModelWrapper.viewModel;
+		mViewModel = (R) viewModelWrapper.getViewModel();
 		mOnSaveInstanceCalled = false;
 
 
 		mViewModel.bindView(view);
 		mBinding.setVariable(config.getViewModelVariableName(), mViewModel);
-		mViewModel.onViewAttached(viewModelWrapper.wasCreated);
+		mViewModel.onViewAttached(viewModelWrapper.wasCreated());
 	}
 
 
 	public void onResume() {
-		if(mViewModel != null) {
-			mViewModel.onResume();
-		}
+		if(mViewModel != null) mViewModel.onResume();
 	}
 
 
 	public void onPause() {
-		if(mViewModel != null) {
-			mViewModel.onPause();
-		}
+		if(mViewModel != null) mViewModel.onPause();
 	}
 
 
@@ -101,7 +97,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			removeViewModel();
 		} else {
 			mViewModel.onViewDetached(false);
-			mCreated = false;
+			mAlreadyCreated = false;
 		}
 	}
 
@@ -125,7 +121,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			Log.d("model", "Removing viewmodel - fragment replaced");
 			removeViewModel();
 		}
-		mCreated = false;
+		mAlreadyCreated = false;
 	}
 
 
@@ -145,7 +141,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			removeViewModel();
 		} else
 			mViewModel.onViewDetached(false);
-		mCreated = false;
+		mAlreadyCreated = false;
 	}
 
 
@@ -178,7 +174,7 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 * @param bundle
 	 */
 	public void onSaveInstanceState(@NonNull Bundle bundle) {
-		bundle.putString(mViewModel.getClass().getName() + "identifier", mScreenId);
+		bundle.putString(mViewModel.getClass().getName() + "identifier", mViewModelId);
 		if(mViewModel != null) {
 			mOnSaveInstanceCalled = true;
 		}
@@ -192,10 +188,10 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 
 	private void removeViewModel() {
 		if(!mModelRemoved) {
-			ViewModelProvider.getInstance().remove(mScreenId);
+			ViewModelProvider.getInstance().removeViewModel(mViewModelId);
 			mViewModel.onModelRemoved();
 			mModelRemoved = true;
-			mCreated = false;
+			mAlreadyCreated = false;
 		}
 	}
 }
