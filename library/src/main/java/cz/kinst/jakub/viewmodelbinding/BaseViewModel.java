@@ -14,7 +14,7 @@ import android.support.v4.app.Fragment;
  */
 public class BaseViewModel<T extends ViewDataBinding> extends BaseObservable {
 	private ViewInterface<T> mView;
-	private String mUniqueIdentifier;
+	private String mViewModelId;
 
 
 	public BaseViewModel() {
@@ -84,13 +84,13 @@ public class BaseViewModel<T extends ViewDataBinding> extends BaseObservable {
 	 * @return An app unique identifier for the current viewmodel instance (will be kept during orientation
 	 * change). This identifier will be reset in case the corresponding activity is killed.
 	 */
-	public String getUniqueIdentifier() {
-		return mUniqueIdentifier;
+	public String getViewModelId() {
+		return mViewModelId;
 	}
 
 
-	void setUniqueIdentifier(String uniqueIdentifier) {
-		mUniqueIdentifier = uniqueIdentifier;
+	void setViewModelId(String viewModelId) {
+		mViewModelId = viewModelId;
 	}
 
 

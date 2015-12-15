@@ -38,7 +38,7 @@ public class ViewModelProvider {
 
 		try {
 			instance = viewModelClass.newInstance();
-			instance.setUniqueIdentifier(viewModelId);
+			instance.setViewModelId(viewModelId);
 			mViewModelCache.put(viewModelId, instance);
 			return new ViewModelWrapper(instance, true);
 		} catch(Exception ex) {
