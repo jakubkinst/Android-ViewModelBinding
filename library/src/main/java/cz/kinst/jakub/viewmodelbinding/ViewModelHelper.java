@@ -31,20 +31,21 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 	 *                           {@link Fragment#onCreate(Bundle)}
 	 */
 	public void onCreate(ViewInterface view, @Nullable Bundle savedInstanceState) {
+		ViewModelBindingConfig config = view.getViewModelBindingConfig();
 		if(view.getViewModelBindingConfig() == null)
 			throw new IllegalStateException("View not configured.");
 		if(mCreated) return;
 		mCreated = true;
 		if(view instanceof Activity) {
-			mBinding = DataBindingUtil.setContentView(((Activity) view), view.getViewModelBindingConfig().getLayoutResource());
+			mBinding = DataBindingUtil.setContentView(((Activity) view), config.getLayoutResource());
 		} else if(view instanceof Fragment) {
-			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), view.getViewModelBindingConfig().getLayoutResource(), null, false);
+			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), config.getLayoutResource(), null, false);
 		} else {
 			throw new IllegalArgumentException("View must be an instance of Activity or Fragment (support-v4).");
 		}
 
 		// no viewmodel for this fragment
-		if(view.getViewModelBindingConfig().getViewModelClass() == null) {
+		if(config.getViewModelClass() == null) {
 			mViewModel = null;
 			return;
 		}
@@ -54,17 +55,17 @@ public class ViewModelHelper<R extends BaseViewModel, T extends ViewDataBinding>
 			if(savedInstanceState == null)
 				mScreenId = UUID.randomUUID().toString();
 			else
-				mScreenId = savedInstanceState.getString(view.getViewModelBindingConfig().getViewModelClass().getName() + "identifier");
+				mScreenId = savedInstanceState.getString(config.getViewModelClass().getName() + "identifier");
 		}
 		// get model instance for this screen
-		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mScreenId, view.getViewModelBindingConfig().getViewModelClass());
+		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mScreenId, config.getViewModelClass());
 		//noinspection unchecked
 		mViewModel = (R) viewModelWrapper.viewModel;
 		mOnSaveInstanceCalled = false;
 
 
 		mViewModel.bindView(view);
-		mBinding.setVariable(view.getViewModelBindingConfig().getViewModelVariableName(), mViewModel);
+		mBinding.setVariable(config.getViewModelVariableName(), mViewModel);
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated);
 	}
 
