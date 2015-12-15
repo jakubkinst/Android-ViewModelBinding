@@ -16,20 +16,8 @@ A lightweight library aiming to speed up Android app development by leveraging t
 public class MainActivity extends BaseViewModelActivity<ActivityMainBinding, MainViewModel> {
 
 	@Override
-	public int getLayoutResource() {
-		return R.layout.activity_main;
-	}
-
-
-	@Override
-	protected Class<? extends BaseViewModel> getViewModelClass() {
-		return MainViewModel.class;
-	}
-
-
-	@Override
-	public int getViewModelDataBindingId() {
-		return BR.viewModel;
+	public ViewModelBindingConfig getViewModelBindingConfig() {
+		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class, BR.viewModel);
 	}
 }
 ```
