@@ -45,6 +45,7 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
         return mViewModelHelper.getBinding();
     }
 
+
     @Nullable
     @Override
     public Bundle getBundle() {
@@ -62,7 +63,7 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModelHelper.onCreate(this, savedInstanceState, getViewModelClass());
+        mViewModelHelper.onCreate(this, savedInstanceState);
     }
 
 
@@ -86,8 +87,5 @@ public abstract class BaseViewModelActivity<T extends ViewDataBinding, S extends
             getViewModel().onActivityResult(requestCode, resultCode, data);
         }
     }
-
-
-    protected abstract Class<? extends BaseViewModel> getViewModelClass();
 
 }
