@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.CallSuper;
 import android.support.v4.app.Fragment;
 
 
@@ -20,11 +21,13 @@ public class BaseViewModel<T extends ViewDataBinding> extends BaseObservable {
 	}
 
 
+	@CallSuper
 	public void onResume() {
 
 	}
 
 
+	@CallSuper
 	public void onPause() {
 
 	}
@@ -35,17 +38,20 @@ public class BaseViewModel<T extends ViewDataBinding> extends BaseObservable {
 	}
 
 
+	@CallSuper
 	@SuppressWarnings("EmptyMethod")
 	public void onViewDetached(boolean finalDetachment) {
 		mView = null;
 	}
 
 
+	@CallSuper
 	@SuppressWarnings("EmptyMethod")
 	public void onViewAttached(boolean firstAttachment) {
 	}
 
 
+	@CallSuper
 	@SuppressWarnings("EmptyMethod")
 	public void onModelRemoved() {
 		mView = null;
