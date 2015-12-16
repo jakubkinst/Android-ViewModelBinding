@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
+import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.CallSuper;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,62 +17,63 @@ import android.support.v4.content.ContextCompat;
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class BaseViewModel<T> extends BaseObservable {
-	@Nullable
+public class BaseViewModel<T extends ViewDataBinding> extends BaseObservable {
 	private ViewInterface<T> mView;
-	private String mUniqueIdentifier;
+	private String mViewModelId;
 
 
 	public BaseViewModel() {
 	}
 
 
+	@CallSuper
 	public void onResume() {
 
 	}
 
 
+	@CallSuper
 	public void onPause() {
 
 	}
 
 
-	public void bindView(ViewInterface viewInterface) {
+	public void bindView(ViewInterface<T> viewInterface) {
 		mView = viewInterface;
 	}
 
 
+	@CallSuper
 	@SuppressWarnings("EmptyMethod")
 	public void onViewDetached(boolean finalDetachment) {
 		mView = null;
 	}
 
 
+	@CallSuper
 	@SuppressWarnings("EmptyMethod")
 	public void onViewAttached(boolean firstAttachment) {
 	}
 
 
+	@CallSuper
 	@SuppressWarnings("EmptyMethod")
 	public void onModelRemoved() {
 		mView = null;
 	}
 
 
-	@Nullable
 	public ViewInterface<T> getView() {
 		return mView;
 	}
 
 
-	@Nullable
 	public Context getContext() {
 		if(mView == null) return null;
 		else return mView.getContext();
 	}
 
 
-	@Nullable
 	public Activity getActivity() {
 		if(mView == null) return null;
 		else return mView.getActivity();
@@ -87,13 +89,13 @@ public class BaseViewModel<T> extends BaseObservable {
 	 * @return An app unique identifier for the current viewmodel instance (will be kept during orientation
 	 * change). This identifier will be reset in case the corresponding activity is killed.
 	 */
-	public String getUniqueIdentifier() {
-		return mUniqueIdentifier;
+	public String getViewModelId() {
+		return mViewModelId;
 	}
 
 
-	void setUniqueIdentifier(String uniqueIdentifier) {
-		mUniqueIdentifier = uniqueIdentifier;
+	void setViewModelId(String viewModelId) {
+		mViewModelId = viewModelId;
 	}
 
 
