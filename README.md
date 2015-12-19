@@ -82,7 +82,7 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
 
 
 	public void onClickGreetButton(View v) {
-		name.set(getView().getBinding().nameEditText.getText().toString());
+		name.set(getBinding().nameEditText.getText().toString());
 	}
 
 
@@ -96,6 +96,13 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
 
 ### Real usage
 For a more complex example of using this approach, see [Weather 2.0](https://github.com/jakubkinst/Weather-2.0) project.
+
+### Android Studio New Screen Template
+To deploy new screens even faster, use the included [Android Studio Template](/extras/AndroidStudioTemplate)
+#### Usage
+1. Copy the template folder to Android Studio templates folder (`/Applications/Android Studio.app/Contents/plugins/android/lib/templates/` on Mac)
+2. Restart Android Studio
+3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
 ## Authors
 - Jakub Kinst (jakub@kinst.cz)

@@ -25,7 +25,7 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
 
 
 	public void onClickGreetButton(View v) {
-		name.set(getView().getBinding().nameEditText.getText().toString());
+		name.set(getBinding().nameEditText.getText().toString());
 	}
 
 

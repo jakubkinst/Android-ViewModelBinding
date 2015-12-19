@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="ViewModelBinding Screen"
+    minApi="14"
+    minBuildApi="14"
+    description="Creates a new empty ViewModelBinding screen together with layout and ViewModel class">
+
+    <category value="ViewModelBinding" />
+    <formfactor value="Mobile" />
+
+    <parameter
+        id="screenType"
+        name="Screen Type"
+        type="enum"
+        default="Activity"
+        help="Either an Activity or Fragment">
+
+        <option id="Activity">Activity</option>
+        <option id="Fragment">Fragment</option>
+    </parameter>
+
+    <parameter
+        id="screenClass"
+        name="Screen Name"
+        type="string"
+        suggest="Main${screenType}"
+        constraints="class|unique|nonempty"
+        default="MainActivity"
+        help="The name of the activity class to create" />
+
+    <parameter
+        id="layoutName"
+        name="Layout Name"
+        type="string"
+        constraints="layout|unique|nonempty"
+        suggest="${screenType?lower_case}_${classToResource(screenClass)}"
+        default="activity_main"
+        help="The name of the layout to create for the activity" />
+
+    <parameter
+        id="viewModelClass"
+        name="ViewModel class name"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${classToResource(screenClass)?cap_first}ViewModel"
+        default="MainViewModel"
+        help="The name of the ViewModel class to create" />
+
+    <parameter
+        id="isLauncher"
+        name="Launcher Activity"
+        type="boolean"
+        default="false"
+        help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher" />
+    
+    <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package"
+        default="com.mycompany.myapp" />
+
+    <!-- 128x128 thumbnails relative to template.xml -->
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_blank_activity.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>
