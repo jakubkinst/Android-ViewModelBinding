@@ -99,6 +99,8 @@ For a more complex example of using this approach, see [Weather 2.0](https://git
 
 ### Android Studio New Screen Template
 To deploy new screens even faster, use the included [Android Studio Template](/extras/AndroidStudioTemplate)
+
+![Android Studio Template](/extras/AndroidStudioTemplate/screen.png)
 #### Usage
 1. Copy the template folder to Android Studio templates folder (`/Applications/Android Studio.app/Contents/plugins/android/lib/templates/` on Mac) OR run the following command to download and install the template automatically
 
