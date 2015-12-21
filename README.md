@@ -98,7 +98,7 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
 For a more complex example of using this approach, see [Weather 2.0](https://github.com/jakubkinst/Weather-2.0) project.
 
 ### Android Studio New Screen Template
-To deploy new screens even faster, use the included [Android Studio Template](/extras/AndroidStudioTemplate)
+To deploy new screens even faster, use the included [Android Studio Template](/extras/AndroidStudioTemplate) (revision `1`)
 
 ![Android Studio Template](/extras/AndroidStudioTemplate/screen.png)
 #### Usage
