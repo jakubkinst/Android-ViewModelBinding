@@ -112,6 +112,8 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 - Jakub Kinst (jakub@kinst.cz)
 - Stepan Sanda (stepan.sanda@gmail.com)
 
+The library was inspired by a great [AndroidViewModel](https://github.com/inloop/AndroidViewModel) library by Inloop
+
 ## License
     Copyright 2015 Jakub Kinst & Stepan Sanda
     
