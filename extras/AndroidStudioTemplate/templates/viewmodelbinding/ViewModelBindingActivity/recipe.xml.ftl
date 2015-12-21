@@ -4,7 +4,10 @@
     <#if appCompat && !(hasDependency('cz.kinst.jakub:viewmodelbinding'))>
     	<dependency mavenUrl="cz.kinst.jakub:viewmodelbinding:0.6.1"/>
 	</#if>
-    
+	<#if useStatefulLayout && !(hasDependency('cz.kinst.jakub:stateful-layout'))>
+        <dependency mavenUrl="cz.kinst.jakub:stateful-layout:1.1.1"/>
+	</#if>
+
     <#if screenType == "Activity">
         <merge from="root/src/app_package/AndroidManifest.xml.ftl"
                  to="${escapeXmlAttribute(manifestOut)}/AndroidManifest.xml" />

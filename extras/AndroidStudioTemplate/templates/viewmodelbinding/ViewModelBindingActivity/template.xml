@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <template
     format="5"
-    revision="1"
+    revision="2"
     name="ViewModelBinding Screen"
     minApi="14"
     minBuildApi="14"
@@ -28,7 +28,7 @@
         suggest="Main${screenType}"
         constraints="class|unique|nonempty"
         default="MainActivity"
-        help="The name of the activity class to create" />
+        help="The name of the screen class to create" />
 
     <parameter
         id="layoutName"
@@ -37,7 +37,7 @@
         constraints="layout|unique|nonempty"
         suggest="${screenType?lower_case}_${classToResource(screenClass)}"
         default="activity_main"
-        help="The name of the layout to create for the activity" />
+        help="The name of the layout to create for the screen" />
 
     <parameter
         id="viewModelClass"
@@ -49,12 +49,19 @@
         help="The name of the ViewModel class to create" />
 
     <parameter
+        id="useStatefulLayout"
+        name="Use StatefulLayout"
+        type="boolean"
+        default="false"
+        help="If true, the root element of layout will be StatefulLayout with ability to display multiple common screen states" />
+
+    <parameter
         id="isLauncher"
         name="Launcher Activity"
         type="boolean"
         default="false"
         help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher" />
-    
+
     <parameter
         id="packageName"
         name="Package name"
