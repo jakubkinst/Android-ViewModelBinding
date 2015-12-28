@@ -16,12 +16,12 @@ import android.view.ViewGroup;
  */
 public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface {
 
-	private final ViewModelHelper<S, T> mViewModelHelper = new ViewModelHelper<>();
+	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		mViewModelHelper.onCreate(this, savedInstanceState);
+		mViewModelBindingHelper.onCreate(this, savedInstanceState);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -29,35 +29,35 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mViewModelHelper.onCreate(this, savedInstanceState);
-		return mViewModelHelper.getBinding().getRoot();
+		mViewModelBindingHelper.onCreate(this, savedInstanceState);
+		return mViewModelBindingHelper.getBinding().getRoot();
 	}
 
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		mViewModelHelper.onResume();
+		mViewModelBindingHelper.onResume();
 	}
 
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		mViewModelHelper.onPause();
+		mViewModelBindingHelper.onPause();
 	}
 
 
 	@Override
 	public void onDestroyView() {
-		mViewModelHelper.onDestroyView(this);
+		mViewModelBindingHelper.onDestroyView(this);
 		super.onDestroyView();
 	}
 
 
 	@Override
 	public void onDestroy() {
-		mViewModelHelper.onDestroy(this);
+		mViewModelBindingHelper.onDestroy(this);
 		super.onDestroy();
 	}
 
@@ -71,7 +71,7 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		mViewModelHelper.onSaveInstanceState(outState);
+		mViewModelBindingHelper.onSaveInstanceState(outState);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -92,11 +92,11 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 
 
 	public S getViewModel() {
-		return mViewModelHelper.getViewModel();
+		return mViewModelBindingHelper.getViewModel();
 	}
 
 
 	public T getBinding() {
-		return mViewModelHelper.getBinding();
+		return mViewModelBindingHelper.getBinding();
 	}
 }

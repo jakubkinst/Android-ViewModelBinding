@@ -4,7 +4,9 @@ import android.support.annotation.LayoutRes;
 
 
 /**
- * Created by jakubkinst on 15/12/15.
+ * Use this to define a ViewModelBinding Config for a specific screen.
+ * <p/>
+ * Config contains layout resource ID, ViewModel class, ViewModel binding variable name
  */
 public class ViewModelBindingConfig {
 

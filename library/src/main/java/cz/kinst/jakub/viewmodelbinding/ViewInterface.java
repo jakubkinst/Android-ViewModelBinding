@@ -7,7 +7,11 @@ import android.os.Bundle;
 
 
 /**
- * Created by jakubkinst on 11/11/15.
+ * An interface representing View in MVVM architecture
+ * <p/>
+ * This interface should be implemented by Activity/Fragment representing a screen
+ *
+ * @param <T> Generated Data Binding layout class
  */
 public interface ViewInterface<T extends ViewDataBinding> {
 	Context getContext();
