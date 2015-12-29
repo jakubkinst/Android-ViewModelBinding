@@ -9,9 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**
- * Created by jakubkinst on 06/12/15.
- */
 public class PermissionsHelper {
 
 	private static final int REQUEST_PERMISSIONS = 100;

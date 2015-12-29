@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * Created by jakubkinst on 10/11/15.
- */
 public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface {
 
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();

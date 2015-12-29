@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * Static Singleton class providing ViewModel instances based on their unique identifier.
- * <p>
+ * <p/>
  * The instance is either created using default constructor or if it exists - retrieved from a static in-memory
  * map storing previously created instances.
  */
@@ -52,7 +52,7 @@ public class ViewModelProvider {
 
 	/**
 	 * Get an instance of specified ViewModel based on its unique ID. The instance will be either restored from an
-	 * in-memory map or created using the default constructor
+	 * in-memory map or created using the default constructor and put inside the map
 	 *
 	 * @param viewModelId    ViewModel ID
 	 * @param viewModelClass ViewModel class
