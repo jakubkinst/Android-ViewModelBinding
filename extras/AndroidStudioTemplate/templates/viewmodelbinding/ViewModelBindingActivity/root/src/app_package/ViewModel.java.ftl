@@ -7,10 +7,10 @@ import android.view.View;
 import cz.kinst.jakub.view.StatefulLayout;
 </#if>
 
-import cz.kinst.jakub.viewmodelbinding.BaseViewModel;
+import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
-public class ${viewModelClass} extends BaseViewModel<${underscoreToCamelCase(layoutName)}Binding> {
+public class ${viewModelClass} extends ViewModel<${underscoreToCamelCase(layoutName)}Binding> {
 
 	<#if useStatefulLayout>
 	public final ObservableField<StatefulLayout.State> state = new ObservableField<>(StatefulLayout.State.PROGRESS);

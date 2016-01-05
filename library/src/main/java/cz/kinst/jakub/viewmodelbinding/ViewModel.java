@@ -2,7 +2,6 @@ package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
@@ -10,7 +9,6 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 
@@ -19,12 +17,12 @@ import android.support.v4.content.ContextCompat;
  *
  * @param <T> Layout Data Binding class
  */
-public abstract class BaseViewModel<T extends ViewDataBinding> extends BaseObservable {
+public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservable {
 	private ViewInterface<T> mView;
 	private String mViewModelId;
 
 
-	public BaseViewModel() {
+	public ViewModel() {
 	}
 
 
@@ -141,23 +139,6 @@ public abstract class BaseViewModel<T extends ViewDataBinding> extends BaseObser
 
 	void setViewModelId(String viewModelId) {
 		mViewModelId = viewModelId;
-	}
-
-
-	@Deprecated
-	public void startActivityForResult(Intent intent, int requestCode) {
-		if(!hasViewAttached()) return;
-		if(mView instanceof Activity) {
-			((Activity) mView).startActivityForResult(intent, requestCode);
-		} else if(mView instanceof Fragment) {
-			((Fragment) mView).startActivityForResult(intent, requestCode);
-		}
-	}
-
-
-	@Deprecated
-	@SuppressWarnings("EmptyMethod")
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	}
 
 

@@ -4,13 +4,13 @@ import android.databinding.ObservableField;
 import android.view.View;
 
 import cz.kinst.jakub.sample.viewmodelbinding.databinding.ActivityMainBinding;
-import cz.kinst.jakub.viewmodelbinding.BaseViewModel;
+import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
+public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 	public ObservableField<String> name = new ObservableField<>();
 

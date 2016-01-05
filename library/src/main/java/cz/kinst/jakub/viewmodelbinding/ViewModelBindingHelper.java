@@ -16,13 +16,13 @@ import java.util.UUID;
 /**
  * The core class of the framework connecting the View with the ViewModel and incorporating Data Binding.
  * The View (either Fragment or Activity) should call pass appropriate callbacks to an instance of {@link ViewModelBindingHelper}.
- * <p/>
- * See {@link BaseViewModelActivity} or {@link BaseViewModelFragment} for an example of usage
+ * <p>
+ * See {@link ViewModelActivity} or {@link ViewModelFragment} for an example of usage
  *
  * @param <R> ViewModel type
  * @param <T> generated Data Binding class representing the layout
  */
-public class ViewModelBindingHelper<R extends BaseViewModel, T extends ViewDataBinding> {
+public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBinding> {
 
 	private static final String LOG_TAG = "ViewModelBindingHelper";
 	private String mViewModelId;
@@ -36,7 +36,7 @@ public class ViewModelBindingHelper<R extends BaseViewModel, T extends ViewDataB
 
 	/**
 	 * Call from {@link Activity#onCreate(Bundle)} or {@link Fragment#onCreate(Bundle)} to initialize ViewModel
-	 * <p/>
+	 * <p>
 	 * The ViewModel instance will be either restored from memory or instantiated via {@link ViewModelProvider}
 	 *
 	 * @param savedInstanceState savedInstance state from {@link Activity#onCreate(Bundle)} or
@@ -202,7 +202,7 @@ public class ViewModelBindingHelper<R extends BaseViewModel, T extends ViewDataB
 
 	/**
 	 * This method defines a key under which the ViewModel ID will be stored inside SavedInstanceState of the Activity/Fragment.
-	 * <p/>
+	 * <p>
 	 * The key should be unique enough to avoid collision with other user-defined keys
 	 *
 	 * @return key

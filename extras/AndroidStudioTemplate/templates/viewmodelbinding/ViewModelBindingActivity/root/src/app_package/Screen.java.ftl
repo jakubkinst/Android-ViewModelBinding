@@ -3,10 +3,10 @@ package ${packageName};
 <#if screenType == "Fragment">
 import android.os.Bundle;
 </#if>
-import cz.kinst.jakub.viewmodelbinding.BaseViewModelActivity;
+import cz.kinst.jakub.viewmodelbinding.ViewModelActivity;
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
 
-public class ${screenClass} extends BaseViewModel${screenType}<${underscoreToCamelCase(layoutName)}Binding, ${viewModelClass}> {
+public class ${screenClass} extends ViewModel${screenType}<${underscoreToCamelCase(layoutName)}Binding, ${viewModelClass}> {
 
 	<#if screenType == "Fragment">
 	public static ${screenClass} newInstance() {

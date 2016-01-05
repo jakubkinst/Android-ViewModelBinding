@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * Static Singleton class providing ViewModel instances based on their unique identifier.
- * <p/>
+ * <p>
  * The instance is either created using default constructor or if it exists - retrieved from a static in-memory
  * map storing previously created instances.
  */
@@ -19,12 +19,7 @@ public class ViewModelProvider {
 	/**
 	 * HashMap storing ViewModel instances
 	 */
-	private final HashMap<String, BaseViewModel<? extends ViewDataBinding>> mViewModels;
-
-
-	private ViewModelProvider() {
-		mViewModels = new HashMap<>();
-	}
+	private final HashMap<String, ViewModel<? extends ViewDataBinding>> mViewModels;
 
 
 	/**
@@ -36,6 +31,11 @@ public class ViewModelProvider {
 		if(sInstance == null)
 			sInstance = new ViewModelProvider();
 		return sInstance;
+	}
+
+
+	private ViewModelProvider() {
+		mViewModels = new HashMap<>();
 	}
 
 
@@ -60,9 +60,9 @@ public class ViewModelProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	@NonNull
-	public synchronized ViewModelWrapper getViewModel(String viewModelId, @NonNull Class<? extends BaseViewModel> viewModelClass) {
+	public synchronized ViewModelWrapper getViewModel(String viewModelId, @NonNull Class<? extends ViewModel> viewModelClass) {
 		// try to get the instance from in-memory map
-		BaseViewModel instance = mViewModels.get(viewModelId);
+		ViewModel instance = mViewModels.get(viewModelId);
 		if(instance != null)
 			return new ViewModelWrapper(instance, false);
 
@@ -84,11 +84,11 @@ public class ViewModelProvider {
 	 */
 	public static class ViewModelWrapper {
 		@NonNull
-		private final BaseViewModel mViewModel;
+		private final ViewModel mViewModel;
 		private final boolean mWasCreated;
 
 
-		private ViewModelWrapper(@NonNull BaseViewModel viewModel, boolean wasCreated) {
+		private ViewModelWrapper(@NonNull ViewModel viewModel, boolean wasCreated) {
 			this.mViewModel = viewModel;
 			this.mWasCreated = wasCreated;
 		}
@@ -100,7 +100,7 @@ public class ViewModelProvider {
 		 * @return ViewModel instance
 		 */
 		@NonNull
-		public BaseViewModel getViewModel() {
+		public ViewModel getViewModel() {
 			return mViewModel;
 		}
 

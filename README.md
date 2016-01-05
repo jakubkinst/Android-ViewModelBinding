@@ -5,7 +5,7 @@ A lightweight library aiming to speed up Android app development by leveraging t
 
 ## Installation
 ### Gradle/Maven (jcenter)
-    compile 'cz.kinst.jakub:viewmodelbinding:0.6.1'
+    compile 'cz.kinst.jakub:viewmodelbinding:0.7'
     
 ## Usage
 
@@ -13,7 +13,7 @@ A lightweight library aiming to speed up Android app development by leveraging t
 `MainActivity.java`
 
 ```java
-public class MainActivity extends BaseViewModelActivity<ActivityMainBinding, MainViewModel> {
+public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainViewModel> {
 
 	@Override
 	public ViewModelBindingConfig getViewModelBindingConfig() {
@@ -67,7 +67,7 @@ public class MainActivity extends BaseViewModelActivity<ActivityMainBinding, Mai
 `MainViewModel.java`
 
 ```java
-public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
+public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 	public ObservableField<String> name = new ObservableField<>();
 

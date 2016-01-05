@@ -1,7 +1,6 @@
 package cz.kinst.jakub.viewmodelbinding;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends BaseViewModel> extends Fragment implements ViewInterface {
+public abstract class ViewModelFragment<T extends ViewDataBinding, S extends ViewModel> extends Fragment implements ViewInterface {
 
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
@@ -70,15 +69,6 @@ public abstract class BaseViewModelFragment<T extends ViewDataBinding, S extends
 	public void onSaveInstanceState(Bundle outState) {
 		mViewModelBindingHelper.onSaveInstanceState(outState);
 		super.onSaveInstanceState(outState);
-	}
-
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if(getViewModel() != null) {
-			getViewModel().onActivityResult(requestCode, resultCode, data);
-		}
 	}
 
 
