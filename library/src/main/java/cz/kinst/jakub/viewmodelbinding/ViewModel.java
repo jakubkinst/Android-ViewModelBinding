@@ -2,6 +2,7 @@ package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
@@ -77,7 +78,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Called after this ViewModel instance was removed from cache
-	 * <p/>
+	 * <p>
 	 * This is the place to do any cleanup to avoid memory leaks
 	 */
 	@CallSuper
@@ -156,8 +157,22 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 
 	/**
+	 * Convenience method to retrieve Resources from Context resources
+	 * <p>
+	 * Warning: May return null if View is not attached
+	 *
+	 * @return Resources or null
+	 */
+	protected Resources getResources() {
+		if(getContext() == null)
+			return null;
+		return getContext().getResources();
+	}
+
+
+	/**
 	 * Convenience method to retrieve String resource from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
@@ -172,7 +187,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Drawable resource from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
@@ -187,7 +202,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Color resource from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
