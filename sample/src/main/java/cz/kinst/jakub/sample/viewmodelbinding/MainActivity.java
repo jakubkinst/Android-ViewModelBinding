@@ -13,6 +13,6 @@ public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainVie
 
 	@Override
 	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class, cz.kinst.jakub.sample.viewmodelbinding.BR.viewModel);
+		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class);
 	}
 }

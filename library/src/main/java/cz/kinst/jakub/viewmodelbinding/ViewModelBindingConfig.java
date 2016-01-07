@@ -29,6 +29,16 @@ public class ViewModelBindingConfig {
 		mViewModelVariableName = viewModelVariableName;
 	}
 
+	/**
+	 * Create a ViewModelBinding Config object for an Activity/Fragment
+	 *
+	 * @param layoutResource        Layout resource ID
+	 * @param viewModelClass        ViewModel class
+	 */
+	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class viewModelClass) {
+		this(layoutResource,viewModelClass, BR.viewModel);
+	}
+
 
 	public int getLayoutResource() {
 		return mLayoutResource;
