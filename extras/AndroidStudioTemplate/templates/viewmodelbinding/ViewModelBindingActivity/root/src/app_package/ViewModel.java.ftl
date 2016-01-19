@@ -17,13 +17,11 @@ public class ${viewModelClass} extends ViewModel<${underscoreToCamelCase(layoutN
 	</#if>
 
 	@Override
-	public void onViewAttached(boolean firstAttachment) {
-		super.onViewAttached(firstAttachment);
-		if(firstAttachment) {
-			// Do initial setup
-			<#if useStatefulLayout>
-			state.set(StatefulLayout.State.CONTENT);
-			</#if>
-		}
+	public void onViewModelCreated() {
+		super.onViewModelCreated();
+		// Do initial setup
+		<#if useStatefulLayout>
+		state.set(StatefulLayout.State.CONTENT);
+		</#if>
 	}
 }

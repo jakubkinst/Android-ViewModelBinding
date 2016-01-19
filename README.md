@@ -71,20 +71,21 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 	public ObservableField<String> name = new ObservableField<>();
 
+	@Override
+	public void onViewModelCreated() {
+		super.onViewModelCreated();
+		// Do API calls etc.
+	}
 
 	@Override
 	public void onViewAttached(boolean firstAttachment) {
 		super.onViewAttached(firstAttachment);
-		if(firstAttachment) {
-			// Do API calls
-		}
+		// manipulate with the view
 	}
-
 
 	public void onClickGreetButton(View v) {
 		name.set(getBinding().nameEditText.getText().toString());
 	}
-
 
 	@Override
 	public void onViewModelDestroyed() {

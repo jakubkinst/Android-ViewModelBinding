@@ -16,11 +16,16 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 
 	@Override
+	public void onViewModelCreated() {
+		super.onViewModelCreated();
+		// Do API calls etc.
+	}
+
+
+	@Override
 	public void onViewAttached(boolean firstAttachment) {
 		super.onViewAttached(firstAttachment);
-		if(firstAttachment) {
-			// Do API calls
-		}
+		// manipulate with the view
 	}
 
 
