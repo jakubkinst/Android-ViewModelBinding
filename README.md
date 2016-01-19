@@ -111,9 +111,9 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 ## Changelog
 
 #### v0.8 (Jan 19, 2016)
-- Added onViewModelCreated() callback in ViewModel
 - ViewModelConfig can be created without `BR.viewModel` as long as the name ov the binding variable is `viewModel`
-- *BREAKING* Renamed ~~`onModelRemoved()`~~ to `onViewModelCreated()` callback in ViewModel
+- Added `onViewModelCreated()` callback in ViewModel
+- *BREAKING* Renamed ~~`onModelRemoved()`~~ to `onViewModelDestroyed()` callback in ViewModel
 - Added `getResources()` convenience method to ViewModel
 
 ## Authors
