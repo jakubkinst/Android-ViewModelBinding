@@ -19,8 +19,8 @@ public abstract class RetrofitCallViewModel<S extends ViewDataBinding> extends V
 
 
 	@Override
-	public void onModelRemoved() {
-		super.onModelRemoved();
+	public void onViewModelDestroyed() {
+		super.onViewModelDestroyed();
 		clearCalls();
 	}
 

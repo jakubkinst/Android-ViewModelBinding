@@ -5,7 +5,7 @@ A lightweight library aiming to speed up Android app development by leveraging t
 
 ## Installation
 ### Gradle/Maven (jcenter)
-    compile 'cz.kinst.jakub:viewmodelbinding:0.7'
+    compile 'cz.kinst.jakub:viewmodelbinding:0.8'
     
 ## Usage
 
@@ -87,8 +87,8 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 
 	@Override
-	public void onModelRemoved() {
-		super.onModelRemoved();
+	public void onViewModelDestroyed() {
+		super.onViewModelDestroyed();
 		// Cancel API calls
 	}
 }
@@ -107,6 +107,14 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 		curl -o viewmodelbinding.zip -Lk https://github.com/jakubkinst/Android-ViewModelBinding/archive/master.zip && unzip viewmodelbinding.zip && cp -af Android-ViewModelBinding-master/extras/AndroidStudioTemplate/templates/. "/Applications/Android Studio.app/Contents/plugins/android/lib/templates/" && rm -r Android-ViewModelBinding-master && rm viewmodelbinding.zip
 2. Restart Android Studio
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
+
+## Changelog
+
+#### v0.8 (Jan 19, 2016)
+- Added onViewModelCreated() callback in ViewModel
+- ViewModelConfig can be created without `BR.viewModel` as long as the name ov the binding variable is `viewModel`
+- *BREAKING* Renamed ~~`onModelRemoved()`~~ to `onViewModelCreated()` callback in ViewModel
+- Added `getResources()` convenience method to ViewModel
 
 ## Authors
 - Jakub Kinst (jakub@kinst.cz)

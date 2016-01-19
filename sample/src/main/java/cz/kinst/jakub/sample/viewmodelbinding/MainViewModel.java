@@ -30,8 +30,8 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 
 	@Override
-	public void onModelRemoved() {
-		super.onModelRemoved();
+	public void onViewModelDestroyed() {
+		super.onViewModelDestroyed();
 		// Cancel API calls
 	}
 }
