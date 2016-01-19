@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 
-
 // To generate release AAR  - run `./gradlew clean build generateRelease`
 // Based on https://medium.com/@tigr/how-to-publish-your-android-studio-library-to-jcenter-5384172c4739
 ext {
 	PUBLISH_GROUP_ID = 'cz.kinst.jakub'
-	PUBLISH_ARTIFACT_ID = 'viewmodelbinding'
+	PUBLISH_ARTIFACT_ID = 'viewmodelbinding-extensions'
 	PUBLISH_VERSION = '0.7'
 }
 apply from: '../release.gradle'
@@ -33,6 +32,7 @@ android {
 	lintOptions {
 		abortOnError false
 	}
+
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_8
@@ -42,7 +42,8 @@ android {
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	testCompile 'junit:junit:4.12'
-	compile 'com.android.support:appcompat-v7:23.1.1'
+	provided project(':library')
+	provided 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
 }
 
 
