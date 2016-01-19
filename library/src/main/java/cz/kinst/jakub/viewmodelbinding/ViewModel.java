@@ -50,7 +50,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 *
 	 * @param viewInterface View
 	 */
-	public void bindView(ViewInterface<T> viewInterface) {
+	protected void bindView(ViewInterface<T> viewInterface) {
 		mView = viewInterface;
 	}
 
@@ -77,12 +77,12 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 
 	/**
-	 * Called after this ViewModel instance was removed from cache
-	 * <p>
-	 * This is the place to do any cleanup to avoid memory leaks
+	 * Called after this ViewModel instance was destroyed and removed from cache
+	 * <p/>
+	 * This is a place to do any cleanup to avoid memory leaks
 	 */
 	@CallSuper
-	public void onModelRemoved() {
+	public void onViewModelDestroyed() {
 		mView = null;
 	}
 
@@ -144,6 +144,15 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 
 	/**
+	 * Called after the ViewModel is instantiated
+	 */
+	@CallSuper
+	public void onViewModelCreated() {
+
+	}
+
+
+	/**
 	 * Convenience method for reaching View Binding instance
 	 *
 	 * @return Layout Data Binding instance
@@ -158,7 +167,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Resources from Context resources
-	 * <p>
+	 * <p/>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @return Resources or null
@@ -172,7 +181,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve String resource from Context resources
-	 * <p>
+	 * <p/>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
@@ -187,7 +196,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Drawable resource from Context resources
-	 * <p>
+	 * <p/>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
@@ -202,7 +211,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Color resource from Context resources
-	 * <p>
+	 * <p/>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID

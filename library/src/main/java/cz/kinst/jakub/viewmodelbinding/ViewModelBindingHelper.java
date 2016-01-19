@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * The core class of the framework connecting the View with the ViewModel and incorporating Data Binding.
  * The View (either Fragment or Activity) should call pass appropriate callbacks to an instance of {@link ViewModelBindingHelper}.
- * <p>
+ * <p/>
  * See {@link ViewModelActivity} or {@link ViewModelFragment} for an example of usage
  *
  * @param <R> ViewModel type
@@ -36,7 +36,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 
 	/**
 	 * Call from {@link Activity#onCreate(Bundle)} or {@link Fragment#onCreate(Bundle)} to initialize ViewModel
-	 * <p>
+	 * <p/>
 	 * The ViewModel instance will be either restored from memory or instantiated via {@link ViewModelProvider}
 	 *
 	 * @param savedInstanceState savedInstance state from {@link Activity#onCreate(Bundle)} or
@@ -85,6 +85,8 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		mBinding.setVariable(mViewModelConfig.getViewModelVariableName(), mViewModel);
 
 		// call ViewModel callback
+		if(viewModelWrapper.wasCreated())
+			mViewModel.onViewModelCreated();
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated());
 	}
 
@@ -202,7 +204,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 
 	/**
 	 * This method defines a key under which the ViewModel ID will be stored inside SavedInstanceState of the Activity/Fragment.
-	 * <p>
+	 * <p/>
 	 * The key should be unique enough to avoid collision with other user-defined keys
 	 *
 	 * @return key
@@ -219,7 +221,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	private void removeViewModel() {
 		if(!mModelRemoved) {
 			ViewModelProvider.getInstance().removeViewModel(mViewModelId);
-			mViewModel.onModelRemoved();
+			mViewModel.onViewModelDestroyed();
 			mModelRemoved = true;
 			mAlreadyCreated = false;
 		}
