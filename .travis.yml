@@ -1,0 +1,31 @@
+language: android
+sudo: false
+jdk: oraclejdk8
+env:
+  matrix:
+    - ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
+
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-23.0.2
+  - android-23
+
+  # Additional components
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - extra-android-support
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/2.9
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
+script:
+# Unit tests
+  - ./gradlew testReleaseUnitTest
+
