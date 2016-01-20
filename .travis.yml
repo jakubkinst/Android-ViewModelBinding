@@ -25,6 +25,7 @@ cache:
     - $HOME/.gradle/native
     - $HOME/.gradle/wrapper
 
+
 script:
 # Unit tests
   - ./gradlew testReleaseUnitTest
