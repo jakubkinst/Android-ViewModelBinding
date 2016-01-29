@@ -157,7 +157,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 *
 	 * @return Layout Data Binding instance
 	 */
-	protected T getBinding() {
+	public T getBinding() {
 		if(hasViewAttached())
 			return getView().getBinding();
 		else
