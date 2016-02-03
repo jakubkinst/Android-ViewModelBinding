@@ -6,11 +6,13 @@ import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.annotation.CallSuper;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 
 /**
@@ -21,6 +23,8 @@ import android.support.v4.content.ContextCompat;
 public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservable {
 	private ViewInterface<T> mView;
 	private String mViewModelId;
+	private Handler mHandler = new Handler();
+	private Thread mUiThread;
 
 
 	public ViewModel() {
@@ -42,16 +46,6 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	@CallSuper
 	public void onPause() {
 
-	}
-
-
-	/**
-	 * Bind a new View instance
-	 *
-	 * @param viewInterface View
-	 */
-	protected void bindView(ViewInterface<T> viewInterface) {
-		mView = viewInterface;
 	}
 
 
@@ -78,7 +72,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Called after this ViewModel instance was destroyed and removed from cache
-	 * <p/>
+	 * <p>
 	 * This is a place to do any cleanup to avoid memory leaks
 	 */
 	@CallSuper
@@ -148,7 +142,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 */
 	@CallSuper
 	public void onViewModelCreated() {
-
+		mUiThread = Thread.currentThread();
 	}
 
 
@@ -166,8 +160,55 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 
 	/**
+	 * Convenience method for binding's root View
+	 *
+	 * @return Root View
+	 */
+	public View getRootView() {
+		return getBinding().getRoot();
+	}
+
+
+	/**
+	 * Runs the specified action on the UI thread. If the current thread is the UI
+	 * thread, then the action is executed immediately. If the current thread is
+	 * not the UI thread, the action is posted to the event queue of the UI thread.
+	 *
+	 * @param action the action to run on the UI thread
+	 */
+	public final void runOnUiThread(Runnable action) {
+		if(Thread.currentThread() != mUiThread) {
+			mHandler.post(action);
+		} else {
+			action.run();
+		}
+	}
+
+
+	/**
+	 * Convenience method for Handler.postDelayed()
+	 *
+	 * @param runnable Runnable to run
+	 * @param delayMs  Delay in ms
+	 */
+	public void postDelayed(Runnable runnable, long delayMs) {
+		mHandler.postDelayed(runnable, delayMs);
+	}
+
+
+	/**
+	 * Bind a new View instance
+	 *
+	 * @param viewInterface View
+	 */
+	protected void bindView(ViewInterface<T> viewInterface) {
+		mView = viewInterface;
+	}
+
+
+	/**
 	 * Convenience method to retrieve Resources from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @return Resources or null
@@ -181,7 +222,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve String resource from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
@@ -196,7 +237,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Drawable resource from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID
@@ -211,7 +252,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 	/**
 	 * Convenience method to retrieve Color resource from Context resources
-	 * <p/>
+	 * <p>
 	 * Warning: May return null if View is not attached
 	 *
 	 * @param resource Resource ID

@@ -3,14 +3,16 @@
 ## Intro
 A lightweight library aiming to speed up Android app development by leveraging the new [Android Data Binding](http://developer.android.com/tools/data-binding/guide.html) together with the [Model-View-ViewModel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) design pattern.
 
-## Installation
-### Gradle/Maven (jcenter)
-    compile 'cz.kinst.jakub:viewmodelbinding:0.8'
-    
-## Usage
+### Why should I use it?
+
 
 ### Lifecycle
 ![Lifecycle Diagram](extras/diagram.png)
+
+## Installation
+    compile 'cz.kinst.jakub:viewmodelbinding:0.8'
+    
+## Usage
 
 ### Activity
 `MainActivity.java`
@@ -22,6 +24,8 @@ public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainVie
 	public ViewModelBindingConfig getViewModelBindingConfig() {
 		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class);
 	}
+	
+	// handle Activity related stuff here - Options menu, Toolbar, Window config, etc.
 }
 ```
     
