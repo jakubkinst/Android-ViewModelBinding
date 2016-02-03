@@ -4,4 +4,6 @@
 	<string name="refresh">Refresh</string>
 	<string name="hello">Hello, %s!</string>
 	<string name="hint_enter_your_name">Enter your name</string>
+	<string name="button_dialog_fragment">Show DialogFragment</string>
+	<string name="click_me">Click me!</string>
 </resources>

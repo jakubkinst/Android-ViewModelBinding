@@ -1,7 +1,9 @@
 package cz.kinst.jakub.sample.viewmodelbinding;
 
 import android.databinding.ObservableField;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import cz.kinst.jakub.sample.viewmodelbinding.databinding.ActivityMainBinding;
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
@@ -13,6 +15,7 @@ import cz.kinst.jakub.viewmodelbinding.ViewModel;
 public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 	public ObservableField<String> name = new ObservableField<>();
+	private SampleDialogFragment dialog;
 
 
 	@Override
@@ -34,9 +37,24 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 	}
 
 
+	public void onClickedShowDialogFragmentButton(View v) {
+		dialog = SampleDialogFragment.newInstance();
+		dialog.setListener(new SampleDialogViewModel.SampleDialogListener() {
+			@Override
+			public void onButtonClicked() {
+				if(hasViewAttached())
+					Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "sample");
+	}
+
+
 	@Override
 	public void onViewModelDestroyed() {
 		super.onViewModelDestroyed();
 		// Cancel API calls
 	}
+
+
 }

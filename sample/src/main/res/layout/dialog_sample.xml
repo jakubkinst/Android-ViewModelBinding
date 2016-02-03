@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="cz.kinst.jakub.sample.viewmodelbinding.SampleDialogViewModel"/>
+	</data>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="@dimen/activity_vertical_margin">
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="@{viewModel.onClickedButton}"
+			android:text="@string/click_me"/>
+	</LinearLayout>
+</layout>
