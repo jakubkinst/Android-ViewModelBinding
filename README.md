@@ -10,7 +10,7 @@ A lightweight library aiming to speed up Android app development by leveraging t
 ![Lifecycle Diagram](extras/diagram.png)
 
 ## Installation
-    compile 'cz.kinst.jakub:viewmodelbinding:0.8'
+    compile 'cz.kinst.jakub:viewmodelbinding:0.8.1'
     
 ## Usage
 
@@ -117,6 +117,11 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
 ## Changelog
+
+#### v0.8.1 (Feb 3, 2016)
+- Added `runOnUiThread()`, `postDelayed()` and `getRootView()` methods to ViewModel
+- Added `ViewModelDialogFragment`
+- `getBinding()` is now public in ViewModel
 
 #### v0.8 (Jan 19, 2016)
 - ViewModelConfig can be created without `BR.viewModel` as long as the name ov the binding variable is `viewModel`
