@@ -10,8 +10,7 @@ A lightweight library aiming to speed up Android app development by leveraging t
 ## Usage
 
 ### Lifecycle
-<img src="extras/diagram.png" style="float: right">
-Lifecycle diagram
+![Lifecycle Diagram](extras/diagram.png)
 
 ### Activity
 `MainActivity.java`
