@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 
 public abstract class ViewModelFragment<T extends ViewDataBinding, S extends ViewModel> extends Fragment implements ViewInterface {
 
@@ -17,15 +20,32 @@ public abstract class ViewModelFragment<T extends ViewDataBinding, S extends Vie
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		mViewModelBindingHelper.onCreate(this, savedInstanceState);
+		Type type = getClass().getGenericSuperclass();
+		if (type instanceof ParameterizedType) {
+			ParameterizedType parameterizedType = (ParameterizedType) type;
+			// This cast success is ensured by generic classes definition of ViewModelFragment
+			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
+		} else {
+			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
+					getClass().getName() + ". If you don't need viewmodel for this fragment, consider extending Fragment class");
+		}
 		super.onCreate(savedInstanceState);
 	}
 
 
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mViewModelBindingHelper.onCreate(this, savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {		Type type = getClass().getGenericSuperclass();
+		if (type instanceof ParameterizedType) {
+			ParameterizedType parameterizedType = (ParameterizedType) type;
+			// This cast success is ensured by generic classes definition of ViewModelFragment
+			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
+		} else {
+			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
+					getClass().getName() + ". If you don't need viewmodel for this fragment, consider extending Fragment class");
+		}
 		return mViewModelBindingHelper.getBinding().getRoot();
 	}
 

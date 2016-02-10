@@ -31,7 +31,6 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	private boolean mOnSaveInstanceCalled;
 	private T mBinding;
 	private boolean mAlreadyCreated;
-	private ViewModelBindingConfig mViewModelConfig;
 
 
 	/**
@@ -42,30 +41,18 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 * @param savedInstanceState savedInstance state from {@link Activity#onCreate(Bundle)} or
 	 *                           {@link Fragment#onCreate(Bundle)}
 	 */
-	public void onCreate(ViewInterface view, @Nullable Bundle savedInstanceState) {
-		// get ViewModelBinding config
-		mViewModelConfig = view.getViewModelBindingConfig();
-		if(mViewModelConfig == null)
-			throw new IllegalStateException("View not configured. Provide valid ViewModelBindingConfig in your View.");
-
+	public void onCreate(ViewInterface view, @Nullable Bundle savedInstanceState, Class<R> viewModelClass) {
 		// skip if already created
 		if(mAlreadyCreated) return;
 
 		// perform Data Binding initialization
 		mAlreadyCreated = true;
 		if(view instanceof Activity)
-			mBinding = DataBindingUtil.setContentView(((Activity) view), mViewModelConfig.getLayoutResource());
+			mBinding = DataBindingUtil.setContentView(((Activity) view), view.getLayoutResource());
 		else if(view instanceof Fragment)
-			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), mViewModelConfig.getLayoutResource(), null, false);
+			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), view.getLayoutResource(), null, false);
 		else
 			throw new IllegalArgumentException("View must be an instance of Activity or Fragment (support-v4).");
-
-
-		// handle case when ViewModel is not desired
-		if(mViewModelConfig.getViewModelClass() == null) {
-			mViewModel = null;
-			return;
-		}
 
 		// obtain unique ViewModelId
 		if(mViewModelId == null) { // screen (activity/fragment) created for first time, attach unique ID
@@ -76,13 +63,13 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		}
 
 		// get ViewModel instance for this screen
-		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mViewModelId, mViewModelConfig.getViewModelClass());
+		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mViewModelId, viewModelClass);
 		mViewModel = (R) viewModelWrapper.getViewModel();
 		mOnSaveInstanceCalled = false;
 
 		// bind all together
 		mViewModel.bindView(view);
-		mBinding.setVariable(mViewModelConfig.getViewModelVariableName(), mViewModel);
+		mBinding.setVariable(view.getViewModelDataBindingId(), mViewModel);
 
 		// call ViewModel callback
 		if(viewModelWrapper.wasCreated())
@@ -211,7 +198,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 */
 	@NonNull
 	private String getViewModelIdFieldName() {
-		return "__vm_id_" + mViewModelConfig.getViewModelClass().getName();
+		return "__vm_id_" + mViewModel.getClass().getName();
 	}
 
 
