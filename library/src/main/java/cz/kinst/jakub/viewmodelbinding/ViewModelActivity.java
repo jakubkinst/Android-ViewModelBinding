@@ -64,11 +64,8 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Type type = getClass().getGenericSuperclass();
-		if (type instanceof ParameterizedType) {
-			// This cast success is ensured by generic classes definition of ViewModelActivity
-			ParameterizedType parameterizedType = (ParameterizedType) type;
-			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
+		if (viewModelClass != null) {
 			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
 		} else {
 			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +

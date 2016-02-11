@@ -20,11 +20,8 @@ public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S exten
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		Type type = getClass().getGenericSuperclass();
-		if (type instanceof ParameterizedType) {
-			ParameterizedType parameterizedType = (ParameterizedType) type;
-			// This cast success is ensured by generic classes definition of ViewModelDialogFragment
-			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
+		if (viewModelClass != null) {
 			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
 		} else {
 			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
@@ -37,11 +34,8 @@ public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S exten
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Type type = getClass().getGenericSuperclass();
-		if (type instanceof ParameterizedType) {
-			ParameterizedType parameterizedType = (ParameterizedType) type;
-			// This cast success is ensured by generic classes definition of ViewModelDialogFragment
-			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
+		if (viewModelClass != null) {
 			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
 		} else {
 			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +

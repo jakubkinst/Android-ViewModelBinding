@@ -13,18 +13,15 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 
-public abstract class ViewModelFragment<T extends ViewDataBinding, S extends ViewModel> extends Fragment implements ViewInterface {
+public abstract class ViewModelFragment<T extends ViewDataBinding, S extends ViewModel> extends Fragment implements ViewInterface<T> {
 
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		Type type = getClass().getGenericSuperclass();
-		if (type instanceof ParameterizedType) {
-			ParameterizedType parameterizedType = (ParameterizedType) type;
-			// This cast success is ensured by generic classes definition of ViewModelFragment
-			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
+		if (viewModelClass != null) {
 			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
 		} else {
 			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
@@ -37,10 +34,8 @@ public abstract class ViewModelFragment<T extends ViewDataBinding, S extends Vie
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {		Type type = getClass().getGenericSuperclass();
-		if (type instanceof ParameterizedType) {
-			ParameterizedType parameterizedType = (ParameterizedType) type;
-			// This cast success is ensured by generic classes definition of ViewModelFragment
-			Class<S> viewModelClass = (Class<S>) parameterizedType.getActualTypeArguments()[1];
+		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
+		if (viewModelClass != null) {
 			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
 		} else {
 			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
