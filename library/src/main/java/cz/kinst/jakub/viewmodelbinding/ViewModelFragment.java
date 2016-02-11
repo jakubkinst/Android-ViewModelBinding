@@ -93,6 +93,12 @@ public abstract class ViewModelFragment<T extends ViewDataBinding, S extends Vie
 	}
 
 
+	@Override
+	public int getViewModelDataBindingId() {
+		return cz.kinst.jakub.viewmodelbinding.BR.viewModel;
+	}
+
+
 	public S getViewModel() {
 		return mViewModelBindingHelper.getViewModel();
 	}

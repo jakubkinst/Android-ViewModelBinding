@@ -70,7 +70,8 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		// bind all together
 		mViewModel.bindView(view);
 		if (!mBinding.setVariable(view.getViewModelDataBindingId(), mViewModel)) {
-			throw new IllegalArgumentException("Variable with id " + view.getViewModelDataBindingId() + " is not found in layout.");
+			throw new IllegalArgumentException("Variable with id " + view.getViewModelDataBindingId() + " is not found in layout. " +
+					"Check your " + view.getClass().getName() + ".getViewModelDataBindingId() return value.");
 		}
 
 
