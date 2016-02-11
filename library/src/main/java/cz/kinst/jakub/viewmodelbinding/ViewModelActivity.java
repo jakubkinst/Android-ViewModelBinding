@@ -86,4 +86,10 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 		super.onPause();
 		mViewModelBindingHelper.onPause();
 	}
+
+
+	@Override
+	public int getViewModelDataBindingId() {
+		return cz.kinst.jakub.viewmodelbinding.BR.viewModel;
+	}
 }

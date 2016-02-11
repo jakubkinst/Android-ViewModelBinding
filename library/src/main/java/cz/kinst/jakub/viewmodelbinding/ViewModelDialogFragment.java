@@ -93,6 +93,12 @@ public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S exten
 	}
 
 
+	@Override
+	public int getViewModelDataBindingId() {
+		return cz.kinst.jakub.viewmodelbinding.BR.viewModel;
+	}
+
+
 	public S getViewModel() {
 		return mViewModelBindingHelper.getViewModel();
 	}
