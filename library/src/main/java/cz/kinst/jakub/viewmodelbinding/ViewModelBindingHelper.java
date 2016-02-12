@@ -33,6 +33,16 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	private boolean mAlreadyCreated;
 
 
+
+	public Class<R> getViewModelClass(ViewInterface viewInterface, int viewModelGenericTypePosition) {
+		Class<R> viewModelClass = (Class<R>) ReflectionUtil.findViewModelClassDefinition(viewInterface.getClass(), viewModelGenericTypePosition);
+		if (viewModelClass == null) {
+			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
+					viewInterface.getClass().getName() + ". If you don't need viewmodel for this activity, consider extending Activity class");
+		}
+		return viewModelClass;
+	}
+
 	/**
 	 * Call from {@link Activity#onCreate(Bundle)} or {@link Fragment#onCreate(Bundle)} to initialize ViewModel
 	 * <p/>
@@ -48,9 +58,9 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		// perform Data Binding initialization
 		mAlreadyCreated = true;
 		if(view instanceof Activity)
-			mBinding = DataBindingUtil.setContentView(((Activity) view), view.getLayoutResource());
+			mBinding = DataBindingUtil.setContentView(((Activity) view), view.getLayoutResourceId());
 		else if(view instanceof Fragment)
-			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), view.getLayoutResource(), null, false);
+			mBinding = DataBindingUtil.inflate(LayoutInflater.from(view.getContext()), view.getLayoutResourceId(), null, false);
 		else
 			throw new IllegalArgumentException("View must be an instance of Activity or Fragment (support-v4).");
 

@@ -21,5 +21,5 @@ public interface ViewInterface<T extends ViewDataBinding> {
 	Bundle getBundle();
 	int getViewModelDataBindingId();
 	@LayoutRes
-   	int getLayoutResource();
+   	int getLayoutResourceId();
 }

@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 
 public abstract class ViewModelActivity<T extends ViewDataBinding, S extends ViewModel<T>> extends AppCompatActivity implements ViewInterface {
+	private static final int VIEW_MODEL_GENERIC_TYPE_POSITION = 1;
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
 
@@ -54,6 +52,12 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 
 
 	@Override
+	public int getViewModelDataBindingId() {
+		return cz.kinst.jakub.viewmodelbinding.BR.viewModel;
+	}
+
+
+	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		mViewModelBindingHelper.onSaveInstanceState(outState);
 		super.onSaveInstanceState(outState);
@@ -63,14 +67,7 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
-		if (viewModelClass != null) {
-			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
-		} else {
-			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
-					getClass().getName() + ". If you don't need viewmodel for this activity, consider extending Activity class");
-		}
+		mViewModelBindingHelper.onCreate(this, savedInstanceState, mViewModelBindingHelper.getViewModelClass(this, VIEW_MODEL_GENERIC_TYPE_POSITION));
 	}
 
 
@@ -85,11 +82,5 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 	protected void onPause() {
 		super.onPause();
 		mViewModelBindingHelper.onPause();
-	}
-
-
-	@Override
-	public int getViewModelDataBindingId() {
-		return cz.kinst.jakub.viewmodelbinding.BR.viewModel;
 	}
 }

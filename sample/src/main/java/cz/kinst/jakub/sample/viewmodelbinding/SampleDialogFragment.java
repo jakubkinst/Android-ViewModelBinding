@@ -29,7 +29,7 @@ public class SampleDialogFragment extends ViewModelDialogFragment<DialogSampleBi
 
 
 	@Override
-	public int getLayoutResource() {
+	public int getLayoutResourceId() {
 		return R.layout.dialog_sample;
 	}
 

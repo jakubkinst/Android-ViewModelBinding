@@ -9,38 +9,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 
 public abstract class ViewModelFragment<T extends ViewDataBinding, S extends ViewModel> extends Fragment implements ViewInterface<T> {
 
+	public static final int VIEW_MODEL_GENERIC_TYPE_POSITION = 1;
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
-		if (viewModelClass != null) {
-			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
-		} else {
-			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
-					getClass().getName() + ". If you don't need viewmodel for this fragment, consider extending Fragment class");
-		}
+		mViewModelBindingHelper.onCreate(this, savedInstanceState, mViewModelBindingHelper.getViewModelClass(this, VIEW_MODEL_GENERIC_TYPE_POSITION));
 		super.onCreate(savedInstanceState);
 	}
 
 
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {		Type type = getClass().getGenericSuperclass();
-		Class<S> viewModelClass = (Class<S>) ReflectionUtil.findViewModelClassDefinition(getClass(), 1);
-		if (viewModelClass != null) {
-			mViewModelBindingHelper.onCreate(this, savedInstanceState, viewModelClass);
-		} else {
-			throw new IllegalStateException("Generic classes definition (binding and viewmodel) is not provided for " +
-					getClass().getName() + ". If you don't need viewmodel for this fragment, consider extending Fragment class");
-		}
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		mViewModelBindingHelper.onCreate(this, savedInstanceState, mViewModelBindingHelper.getViewModelClass(this, VIEW_MODEL_GENERIC_TYPE_POSITION));
 		return mViewModelBindingHelper.getBinding().getRoot();
 	}
 
