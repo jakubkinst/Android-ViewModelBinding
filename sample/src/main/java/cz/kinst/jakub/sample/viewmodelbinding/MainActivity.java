@@ -3,7 +3,7 @@ package cz.kinst.jakub.sample.viewmodelbinding;
 
 import cz.kinst.jakub.sample.viewmodelbinding.databinding.ActivityMainBinding;
 import cz.kinst.jakub.viewmodelbinding.ViewModelActivity;
-import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
+import cz.kinst.jakub.sample.viewmodelbinding.BR;
 
 
 /**
@@ -12,7 +12,13 @@ import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
 public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainViewModel> {
 
 	@Override
-	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class);
+	public int getViewModelDataBindingId() {
+		return BR.viewModel;
+	}
+
+
+	@Override
+	public int getLayoutResource() {
+		return R.layout.activity_main;
 	}
 }

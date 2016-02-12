@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import cz.kinst.jakub.sample.viewmodelbinding.databinding.DialogSampleBinding;
-import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
 import cz.kinst.jakub.viewmodelbinding.ViewModelDialogFragment;
+import cz.kinst.jakub.sample.viewmodelbinding.BR;
 
 
 public class SampleDialogFragment extends ViewModelDialogFragment<DialogSampleBinding, SampleDialogViewModel> {
@@ -23,8 +23,14 @@ public class SampleDialogFragment extends ViewModelDialogFragment<DialogSampleBi
 
 
 	@Override
-	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.dialog_sample, SampleDialogViewModel.class);
+	public int getViewModelDataBindingId() {
+		return BR.viewModel;
+	}
+
+
+	@Override
+	public int getLayoutResource() {
+		return R.layout.dialog_sample;
 	}
 
 

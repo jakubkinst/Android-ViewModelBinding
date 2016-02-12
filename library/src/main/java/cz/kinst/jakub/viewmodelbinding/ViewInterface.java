@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 
 
 /**
@@ -18,5 +19,7 @@ public interface ViewInterface<T extends ViewDataBinding> {
 	T getBinding();
 	Activity getActivity();
 	Bundle getBundle();
-	ViewModelBindingConfig getViewModelBindingConfig();
+	int getViewModelDataBindingId();
+	@LayoutRes
+   	int getLayoutResource();
 }
