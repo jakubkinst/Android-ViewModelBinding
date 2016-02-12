@@ -9,17 +9,18 @@ import android.support.annotation.LayoutRes;
 
 /**
  * An interface representing View in MVVM architecture
- * <p/>
+ * <p>
  * This interface should be implemented by Activity/Fragment representing a screen
  *
  * @param <T> Generated Data Binding layout class
  */
-public interface ViewInterface<T extends ViewDataBinding> {
+public interface ViewInterface<T extends ViewDataBinding, S extends ViewModel> {
 	Context getContext();
 	T getBinding();
 	Activity getActivity();
 	Bundle getBundle();
 	int getViewModelDataBindingId();
 	@LayoutRes
-   	int getLayoutResourceId();
+	int getLayoutResourceId();
+	S getViewModel();
 }

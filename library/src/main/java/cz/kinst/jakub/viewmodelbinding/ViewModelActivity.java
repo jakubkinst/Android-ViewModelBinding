@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 
-public abstract class ViewModelActivity<T extends ViewDataBinding, S extends ViewModel<T>> extends AppCompatActivity implements ViewInterface {
+public abstract class ViewModelActivity<T extends ViewDataBinding, S extends ViewModel<T>> extends AppCompatActivity implements ViewInterface<T, S> {
 	private static final int VIEW_MODEL_GENERIC_TYPE_POSITION = 1;
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
@@ -32,6 +32,7 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 	}
 
 
+	@Override
 	public S getViewModel() {
 		return mViewModelBindingHelper.getViewModel();
 	}

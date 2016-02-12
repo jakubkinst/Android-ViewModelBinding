@@ -21,7 +21,7 @@ import android.view.View;
  * @param <T> Layout Data Binding class
  */
 public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservable {
-	private ViewInterface<T> mView;
+	private ViewInterface<T, ? extends ViewModel> mView;
 	private String mViewModelId;
 	private Handler mHandler = new Handler();
 	private Thread mUiThread;
@@ -86,7 +86,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 *
 	 * @return currently attached View or null if no View is attached
 	 */
-	public ViewInterface<T> getView() {
+	public ViewInterface<T, ? extends ViewModel> getView() {
 		return mView;
 	}
 
@@ -201,7 +201,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 *
 	 * @param viewInterface View
 	 */
-	protected void bindView(ViewInterface<T> viewInterface) {
+	protected void bindView(ViewInterface<T, ? extends ViewModel> viewInterface) {
 		mView = viewInterface;
 	}
 
