@@ -1,9 +1,20 @@
 # Android ViewModelBinding
 [![Build Status](https://travis-ci.org/jakubkinst/Android-ViewModelBinding.svg?branch=master)](https://travis-ci.org/jakubkinst/Android-ViewModelBinding)
 ## Intro
-A lightweight library aiming to speed up Android app development by leveraging the new [Android Data Binding](http://developer.android.com/tools/data-binding/guide.html) together with the [Model-View-ViewModel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) design pattern.
+A lightweight library aiming to speed up Android app development by leveraging the new [Android Data Binding](http://developer.android.com/tools/data-binding/guide.html) and taking the best from the [Model-View-ViewModel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) design pattern.
 
 ### Why should I use it?
+1. **Data Binding**
+ Android Data Binding is great and if you're not, you should start using it today.
+2. **You don't need to care about screen rotation (configuration change) at all.**
+ Most of the screen lifecycle is moved to ViewModel where the lifecycle is dramatically easier to understand and to use. The **ViewModel instance outlives it's Activity/Fragment** during configuration change so no more hassle with `onSaveInstanceState()` or using retained Fragments.
+3. **ViewModel as the only variable in the layout**
+ ViewModel serves as the data provider in layout's binding as well as handler for click or other methods common fro Data Binding. With a construct like `android:onClick="@{viewModel.onClickedPlayButton}"` **you will never have to set an `OnClickListener` anymore**. Also, each ViewModel extends `BaseObservable` so you have a choice between using BaseObservable approach or ObservableField approach within the DataBinding. (see [Data Binding Guide](http://developer.android.com/tools/data-binding/guide.html))
+
+### How does it work?
+The framework extensively uses Java Generics to provide a type-safe link between Activity/Fragment and ViewModel and its binding.
+
+ViewModel instances are stored in a global static Map and reattached automatically to corresponding Activity/Fragment. When there is no need for the ViewModel anymore (Activity finished) the instance is destroyed.
 
 
 ### Lifecycle
@@ -11,6 +22,14 @@ A lightweight library aiming to speed up Android app development by leveraging t
 
 ## Installation
     compile 'cz.kinst.jakub:viewmodelbinding:0.8.1'
+    
+ Don't forget to **enable Data Binding** in your module:
+ 	
+	android {
+		dataBinding {
+			enabled = true;
+		}
+	}
     
 ## Usage
 
