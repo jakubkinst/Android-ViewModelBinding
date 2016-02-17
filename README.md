@@ -17,8 +17,8 @@ The framework extensively uses Java Generics to provide a type-safe link between
 ViewModel instances are stored in a global static Map and reattached automatically to corresponding Activity/Fragment. When there is no need for the ViewModel anymore (Activity finished) the instance is destroyed.
 
 
-### Lifecycle
-![Lifecycle Diagram](extras/diagram.png)
+### ViewModel Lifecycle
+![ViewModel Lifecycle Diagram](extras/diagram.png)
 
 ## Installation
     compile 'cz.kinst.jakub:viewmodelbinding:0.8.1'
