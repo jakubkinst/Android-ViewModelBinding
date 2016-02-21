@@ -95,7 +95,7 @@ public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainVie
 ```java
 public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
-	public ObservableField<String> name = new ObservableField<>();
+	public final ObservableField<String> name = new ObservableField<>();
 
 	@Override
 	public void onViewModelCreated() {
@@ -111,12 +111,6 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 	public void onClickGreetButton(View v) {
 		name.set(getBinding().nameEditText.getText().toString());
-	}
-
-	@Override
-	public void onViewModelDestroyed() {
-		super.onViewModelDestroyed();
-		// Cancel API calls
 	}
 }
 ```
