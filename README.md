@@ -17,8 +17,8 @@ The framework extensively uses Java Generics to provide a type-safe link between
 ViewModel instances are stored in a global static Map and reattached automatically to corresponding Activity/Fragment. When there is no need for the ViewModel anymore (Activity finished) the instance is destroyed.
 
 
-### Lifecycle
-![Lifecycle Diagram](extras/diagram.png)
+### ViewModel Lifecycle
+![ViewModel Lifecycle Diagram](extras/diagram.png)
 
 ## Installation
     compile 'cz.kinst.jakub:viewmodelbinding:0.8.1'
@@ -95,7 +95,7 @@ public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainVie
 ```java
 public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
-	public ObservableField<String> name = new ObservableField<>();
+	public final ObservableField<String> name = new ObservableField<>();
 
 	@Override
 	public void onViewModelCreated() {
@@ -111,12 +111,6 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 
 	public void onClickGreetButton(View v) {
 		name.set(getBinding().nameEditText.getText().toString());
-	}
-
-	@Override
-	public void onViewModelDestroyed() {
-		super.onViewModelDestroyed();
-		// Cancel API calls
 	}
 }
 ```
