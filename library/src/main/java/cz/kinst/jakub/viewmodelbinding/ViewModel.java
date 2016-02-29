@@ -25,6 +25,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	private String mViewModelId;
 	private Handler mHandler = new Handler();
 	private Thread mUiThread;
+	private boolean mRunning;
 
 
 	public ViewModel() {
@@ -36,7 +37,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 */
 	@CallSuper
 	public void onResume() {
-
+		mRunning = true;
 	}
 
 
@@ -45,7 +46,17 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 */
 	@CallSuper
 	public void onPause() {
+		mRunning = false;
+	}
 
+
+	/**
+	 * Returns true if the Activity/Fragment is in running state(not paused) at the moment
+	 *
+	 * @return true if running
+	 */
+	public boolean isRunning() {
+		return hasViewAttached() && mRunning;
 	}
 
 

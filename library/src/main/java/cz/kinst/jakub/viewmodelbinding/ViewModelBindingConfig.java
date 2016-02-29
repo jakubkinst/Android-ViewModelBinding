@@ -5,7 +5,7 @@ import android.support.annotation.LayoutRes;
 
 /**
  * Use this to define a ViewModelBinding Config for a specific screen.
- * <p/>
+ * <p>
  * Config contains layout resource ID, ViewModel class, ViewModel binding variable name
  */
 public class ViewModelBindingConfig {
@@ -29,14 +29,15 @@ public class ViewModelBindingConfig {
 		mViewModelVariableName = viewModelVariableName;
 	}
 
+
 	/**
 	 * Create a ViewModelBinding Config object for an Activity/Fragment
 	 *
-	 * @param layoutResource        Layout resource ID
-	 * @param viewModelClass        ViewModel class
+	 * @param layoutResource Layout resource ID
+	 * @param viewModelClass ViewModel class
 	 */
 	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class viewModelClass) {
-		this(layoutResource,viewModelClass, BR.viewModel);
+		this(layoutResource, viewModelClass, BR.viewModel);
 	}
 
 

@@ -21,7 +21,7 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ![ViewModel Lifecycle Diagram](extras/diagram.png)
 
 ## Installation
-    compile 'cz.kinst.jakub:viewmodelbinding:0.8.1'
+    compile 'cz.kinst.jakub:viewmodelbinding:0.8.2'
     
  Don't forget to **enable Data Binding** in your module:
  	
@@ -130,6 +130,8 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
 ## Changelog
+#### v0.8.2 (Feb 26, 2016)
+- Added `isRunning()` method to ViewModel telling if Activity/Fragment is in RUNNING state
 
 #### v0.8.1 (Feb 3, 2016)
 - Added `runOnUiThread()`, `postDelayed()` and `getRootView()` methods to ViewModel
