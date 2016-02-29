@@ -131,7 +131,7 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 
 ## Changelog
 #### v0.8.2 (Feb 26, 2016)
-- Added `isRunning()` method to ViewModel telling if Activity/Fragment is in RUNNING state
+- Added `isRunning()` method to ViewModel telling if Activity/Fragment is in RUNNING state (in between `onResume()` and `onPause()`)
 
 #### v0.8.1 (Feb 3, 2016)
 - Added `runOnUiThread()`, `postDelayed()` and `getRootView()` methods to ViewModel
