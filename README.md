@@ -21,16 +21,19 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ![ViewModel Lifecycle Diagram](extras/diagram.png)
 
 ## Installation
-    compile 'cz.kinst.jakub:viewmodelbinding:0.8.2'
-    
- Don't forget to **enable Data Binding** in your module:
- 	
-	android {
-		dataBinding {
-			enabled = true;
-		}
+
+```groovy
+compile 'cz.kinst.jakub:viewmodelbinding:0.8.2'
+```
+
+Don't forget to **enable Data Binding** in your module:
+```groovy 	
+android {
+	dataBinding {
+		enabled = true;
 	}
-    
+}
+```
 ## Usage
 
 ### Activity
