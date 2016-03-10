@@ -11,8 +11,9 @@ import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
  */
 public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainViewModel> {
 
+
 	@Override
-	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class);
+	public ViewModelBindingConfig<MainViewModel> getViewModelBindingConfig() {
+		return new ViewModelBindingConfig<>(R.layout.activity_main, MainViewModel.class);
 	}
 }

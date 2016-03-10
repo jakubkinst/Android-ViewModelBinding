@@ -58,20 +58,20 @@ public class ViewModelProvider {
 	 * @param viewModelClass ViewModel class
 	 * @return ViewModel inside a wrapper containing a flag indicating if the instance was created or restored
 	 */
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
 	@NonNull
-	public synchronized ViewModelWrapper getViewModel(String viewModelId, @NonNull Class<? extends ViewModel> viewModelClass) {
+	public synchronized <T extends ViewModel> ViewModelWrapper<T> getViewModel(String viewModelId, @NonNull Class<T> viewModelClass) {
 		// try to get the instance from in-memory map
-		ViewModel instance = mViewModels.get(viewModelId);
+		T instance = (T) mViewModels.get(viewModelId);
 		if(instance != null)
-			return new ViewModelWrapper(instance, false);
+			return new ViewModelWrapper<T>(instance, false);
 
 		// if it doesn't exist, use the default constructor to create new instance
 		try {
 			instance = viewModelClass.newInstance();
 			instance.setViewModelId(viewModelId);
 			mViewModels.put(viewModelId, instance);
-			return new ViewModelWrapper(instance, true);
+			return new ViewModelWrapper<T>(instance, true);
 		} catch(Exception ex) {
 			throw new RuntimeException(ex);
 		}
@@ -82,13 +82,13 @@ public class ViewModelProvider {
 	 * Wrapper around ViewModel instance bearing additional information
 	 * such as a flag indicating if the instance was created or restored
 	 */
-	public static class ViewModelWrapper {
+	public static class ViewModelWrapper<V extends ViewModel> {
 		@NonNull
-		private final ViewModel mViewModel;
+		private final V mViewModel;
 		private final boolean mWasCreated;
 
 
-		private ViewModelWrapper(@NonNull ViewModel viewModel, boolean wasCreated) {
+		private ViewModelWrapper(@NonNull V viewModel, boolean wasCreated) {
 			this.mViewModel = viewModel;
 			this.mWasCreated = wasCreated;
 		}
@@ -100,7 +100,7 @@ public class ViewModelProvider {
 		 * @return ViewModel instance
 		 */
 		@NonNull
-		public ViewModel getViewModel() {
+		public V getViewModel() {
 			return mViewModel;
 		}
 

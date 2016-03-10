@@ -8,11 +8,11 @@ import android.support.annotation.LayoutRes;
  * <p>
  * Config contains layout resource ID, ViewModel class, ViewModel binding variable name
  */
-public class ViewModelBindingConfig {
+public class ViewModelBindingConfig<T extends ViewModel> {
 
 	@LayoutRes
 	int mLayoutResource;
-	Class mViewModelClass;
+	Class<T> mViewModelClass;
 	int mViewModelVariableName;
 
 
@@ -23,7 +23,7 @@ public class ViewModelBindingConfig {
 	 * @param viewModelClass        ViewModel class
 	 * @param viewModelVariableName Data Binding variable name for injecting the ViewModel - use generated id (e.g. BR.mViewModel)
 	 */
-	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class viewModelClass, int viewModelVariableName) {
+	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class<T> viewModelClass, int viewModelVariableName) {
 		mLayoutResource = layoutResource;
 		mViewModelClass = viewModelClass;
 		mViewModelVariableName = viewModelVariableName;
@@ -36,7 +36,7 @@ public class ViewModelBindingConfig {
 	 * @param layoutResource Layout resource ID
 	 * @param viewModelClass ViewModel class
 	 */
-	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class viewModelClass) {
+	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class<T> viewModelClass) {
 		this(layoutResource, viewModelClass, BR.viewModel);
 	}
 
@@ -46,7 +46,7 @@ public class ViewModelBindingConfig {
 	}
 
 
-	public Class getViewModelClass() {
+	public Class<T> getViewModelClass() {
 		return mViewModelClass;
 	}
 

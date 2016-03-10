@@ -31,7 +31,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	private boolean mOnSaveInstanceCalled;
 	private T mBinding;
 	private boolean mAlreadyCreated;
-	private ViewModelBindingConfig mViewModelConfig;
+	private ViewModelBindingConfig<R> mViewModelConfig;
 
 
 	/**
@@ -42,7 +42,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 * @param savedInstanceState savedInstance state from {@link Activity#onCreate(Bundle)} or
 	 *                           {@link Fragment#onCreate(Bundle)}
 	 */
-	public void onCreate(ViewInterface view, @Nullable Bundle savedInstanceState) {
+	public void onCreate(ViewInterface<T, R> view, @Nullable Bundle savedInstanceState) {
 		// get ViewModelBinding config
 		mViewModelConfig = view.getViewModelBindingConfig();
 		if(mViewModelConfig == null)
@@ -76,13 +76,18 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		}
 
 		// get ViewModel instance for this screen
-		final ViewModelProvider.ViewModelWrapper viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mViewModelId, mViewModelConfig.getViewModelClass());
-		mViewModel = (R) viewModelWrapper.getViewModel();
+		final ViewModelProvider.ViewModelWrapper<R> viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mViewModelId, mViewModelConfig.getViewModelClass());
+		mViewModel = viewModelWrapper.getViewModel();
 		mOnSaveInstanceCalled = false;
 
 		// bind all together
 		mViewModel.bindView(view);
-		mBinding.setVariable(mViewModelConfig.getViewModelVariableName(), mViewModel);
+		if (!mBinding.setVariable(mViewModelConfig.getViewModelVariableName(), mViewModel)) {
+			throw new IllegalArgumentException("Binding variable wasn't set successfully. Probably viewModelVariableName of your " +
+					"ViewModelBindingConfig of " + view.getClass().getSimpleName() + " doesn't match any variable in "
+					+ mBinding.getClass().getSimpleName());
+		}
+
 
 		// call ViewModel callback
 		if(viewModelWrapper.wasCreated())
