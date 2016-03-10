@@ -13,10 +13,10 @@ import android.os.Bundle;
  *
  * @param <T> Generated Data Binding layout class
  */
-public interface ViewInterface<T extends ViewDataBinding> {
+public interface ViewInterface<T extends ViewDataBinding, S extends ViewModel> {
 	Context getContext();
 	T getBinding();
 	Activity getActivity();
 	Bundle getBundle();
-	ViewModelBindingConfig getViewModelBindingConfig();
+	ViewModelBindingConfig<S> getViewModelBindingConfig();
 }

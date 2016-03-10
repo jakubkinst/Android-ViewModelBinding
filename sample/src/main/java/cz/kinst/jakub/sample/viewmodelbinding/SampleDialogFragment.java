@@ -23,8 +23,8 @@ public class SampleDialogFragment extends ViewModelDialogFragment<DialogSampleBi
 
 
 	@Override
-	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.dialog_sample, SampleDialogViewModel.class);
+	public ViewModelBindingConfig<SampleDialogViewModel> getViewModelBindingConfig() {
+		return new ViewModelBindingConfig<>(R.layout.dialog_sample, SampleDialogViewModel.class);
 	}
 
 
