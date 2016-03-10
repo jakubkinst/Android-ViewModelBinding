@@ -23,7 +23,7 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ## Installation
 
 ```groovy
-compile 'cz.kinst.jakub:viewmodelbinding:0.8.2'
+compile 'cz.kinst.jakub:viewmodelbinding:0.8.3'
 ```
 
 Don't forget to **enable Data Binding** in your module:
@@ -43,8 +43,8 @@ android {
 public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainViewModel> {
 
 	@Override
-	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.activity_main, MainViewModel.class);
+	public ViewModelBindingConfig<MainViewModel> getViewModelBindingConfig() {
+		return new ViewModelBindingConfig<>(R.layout.activity_main, MainViewModel.class);
 	}
 	
 	// handle Activity related stuff here - Options menu, Toolbar, Window config, etc.
@@ -133,6 +133,9 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
 ## Changelog
+#### v0.8.3 (Mar 10, 2016)
+- Improved internal generics - more type-safety across the library
+
 #### v0.8.2 (Feb 26, 2016)
 - Added `isRunning()` method to ViewModel telling if Activity/Fragment is in RUNNING state (in between `onResume()` and `onPause()`)
 
@@ -147,9 +150,10 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 - *BREAKING* Renamed ~~`onModelRemoved()`~~ to `onViewModelDestroyed()` callback in ViewModel
 - Added `getResources()` convenience method to ViewModel
 
-## Authors
+## Contributors
 - Jakub Kinst (jakub@kinst.cz)
 - Stepan Sanda (stepan.sanda@gmail.com)
+- Artem Ufimtcev (alotxo@gmail.com)
 
 The library was inspired by a great [AndroidViewModel](https://github.com/inloop/AndroidViewModel) library by Inloop
 

@@ -20,7 +20,7 @@ public class ${screenClass} extends ViewModel${screenType}<${underscoreToCamelCa
 
 
     @Override
-	public ViewModelBindingConfig getViewModelBindingConfig() {
-		return new ViewModelBindingConfig(R.layout.${layoutName}, ${classToResource(screenClass)?cap_first}ViewModel.class, BR.viewModel);
+	public ViewModelBindingConfig<${viewModelClass}> getViewModelBindingConfig() {
+		return new ViewModelBindingConfig<>(R.layout.${layoutName}, ${classToResource(screenClass)?cap_first}ViewModel.class, BR.viewModel);
 	}
 }
