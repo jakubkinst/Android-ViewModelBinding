@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<import type="cz.kinst.jakub.sample.viewmodelbinding.ItemEntity"/>
+
+		<variable
+			name="viewModel"
+			type="cz.kinst.jakub.itemviewmodelbinding.ItemViewModel&lt;ItemEntity&gt;"/>
+	</data>
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@{viewModel.item.title}"
+			android:textAppearance="@style/TextAppearance.AppCompat.Title"
+			tools:text="Title"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@{viewModel.item.subtitle}"
+			android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+			tools:text="Subtitle"/>
+	</LinearLayout>
+</layout>
