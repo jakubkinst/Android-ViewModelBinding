@@ -37,14 +37,21 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 	}
 
 
+	@Override
+	public void onViewDetached(boolean finalDetachment) {
+		super.onViewDetached(finalDetachment);
+
+		runOnUiThread(() ->
+				Toast.makeText(getContext(), "onViewDetached()", Toast.LENGTH_SHORT).show()
+		);
+	}
+
+
 	public void onClickedShowDialogFragmentButton(View v) {
 		dialog = SampleDialogFragment.newInstance();
-		dialog.setListener(new SampleDialogViewModel.SampleDialogListener() {
-			@Override
-			public void onButtonClicked() {
-				if(hasViewAttached())
-					Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show();
-			}
+		dialog.setListener(() -> {
+			if(hasViewAttached())
+				Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show();
 		});
 		dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "sample");
 	}
@@ -55,6 +62,5 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 		super.onViewModelDestroyed();
 		// Cancel API calls
 	}
-
 
 }

@@ -14,6 +14,9 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  * ViewModel base class. Every ViewModel must extend this class
@@ -26,6 +29,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	private Handler mHandler = new Handler();
 	private Thread mUiThread;
 	private boolean mRunning;
+	private Queue<Runnable> mUiThreadTaskQueue = new LinkedList<>();
 
 
 	public ViewModel() {
@@ -78,6 +82,9 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 */
 	@CallSuper
 	public void onViewAttached(boolean firstAttachment) {
+		while(!mUiThreadTaskQueue.isEmpty()) {
+			internalRunOnUiThreadNow(mUiThreadTaskQueue.remove());
+		}
 	}
 
 
@@ -188,11 +195,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 * @param action the action to run on the UI thread
 	 */
 	public final void runOnUiThread(Runnable action) {
-		if(Thread.currentThread() != mUiThread) {
-			mHandler.post(action);
-		} else {
-			action.run();
-		}
+		internalRunOnUiThreadNow(action);
 	}
 
 
@@ -273,5 +276,22 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 		if(getContext() == null)
 			return -1;
 		return ContextCompat.getColor(getContext(), resource);
+	}
+
+
+	private void internalRunOnUiThreadNow(Runnable action) {
+		if(Thread.currentThread() != mUiThread) {
+			mHandler.post(() -> {
+				if(hasViewAttached())
+					action.run();
+				else
+					mUiThreadTaskQueue.add(action);
+			});
+		} else {
+			if(hasViewAttached())
+				action.run();
+			else
+				mUiThreadTaskQueue.add(action);
+		}
 	}
 }
