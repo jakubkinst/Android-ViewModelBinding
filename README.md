@@ -36,7 +36,7 @@ android {
 ```
 ## Usage
 
-### Activity
+### Activity/Fragment
 `MainActivity.java`
 
 ```java
