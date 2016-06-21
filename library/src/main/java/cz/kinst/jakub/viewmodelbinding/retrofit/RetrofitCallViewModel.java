@@ -1,4 +1,4 @@
-package cz.kinst.jakub.viewmodelbinding.extensions.retrofit;
+package cz.kinst.jakub.viewmodelbinding.retrofit;
 
 import android.databinding.ViewDataBinding;
 
