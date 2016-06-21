@@ -23,7 +23,7 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ## Installation
 
 ```groovy
-compile 'cz.kinst.jakub:viewmodelbinding:0.8.3'
+compile 'cz.kinst.jakub:viewmodelbinding:0.9'
 ```
 
 Don't forget to **enable Data Binding** in your module:
@@ -133,6 +133,12 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
 ## Changelog
+#### v0.9 (Jun 21, 2016)
+- Added safe handling of Runnables in `runOnUiThread()` - if the ViewModel is not attached to an Activity/Fragment at the time, the Runnable will be executed once it is attached again
+- Added `getString()` method taking formatting arguments to ViewModel
+- Added `RetrofitCallViewModel` extension for handling Retrofit calls (see the source)
+- Updated dependencies (support library versions, targetSdkVersion, etc.)
+
 #### v0.8.3 (Mar 10, 2016)
 - Improved internal generics - more type-safety across the library
 
