@@ -41,6 +41,7 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 	public void onViewDetached(boolean finalDetachment) {
 		super.onViewDetached(finalDetachment);
 
+		// run safely on ui thread next time the view is attached (if this was called directly, getContext() would return null at this time)
 		runOnUiThread(() ->
 				Toast.makeText(getContext(), "onViewDetached()", Toast.LENGTH_SHORT).show()
 		);

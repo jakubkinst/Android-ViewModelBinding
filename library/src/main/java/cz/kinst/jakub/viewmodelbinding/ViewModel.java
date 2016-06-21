@@ -14,8 +14,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 /**
@@ -29,7 +29,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	private Handler mHandler = new Handler();
 	private Thread mUiThread;
 	private boolean mRunning;
-	private Queue<Runnable> mUiThreadTaskQueue = new LinkedList<>();
+	private Queue<Runnable> mUiThreadTaskQueue = new ConcurrentLinkedQueue<>();
 
 
 	public ViewModel() {
@@ -83,7 +83,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	@CallSuper
 	public void onViewAttached(boolean firstAttachment) {
 		while(!mUiThreadTaskQueue.isEmpty()) {
-			internalRunOnUiThreadNow(mUiThreadTaskQueue.remove());
+			internalRunOnUiThreadNow(mUiThreadTaskQueue.poll());
 		}
 	}
 
@@ -96,6 +96,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	@CallSuper
 	public void onViewModelDestroyed() {
 		mView = null;
+		mUiThreadTaskQueue.clear();
 	}
 
 
