@@ -251,6 +251,22 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 
 	/**
+	 * Convenience method to retrieve String resource from Context resources
+	 * <p>
+	 * Warning: May return null if View is not attached
+	 *
+	 * @param resource   Resource ID
+	 * @param formatArgs Formatting arguments
+	 * @return String from resources or null
+	 */
+	protected String getString(@StringRes int resource, Object... formatArgs) {
+		if(getContext() == null)
+			return null;
+		return getContext().getString(resource, formatArgs);
+	}
+
+
+	/**
 	 * Convenience method to retrieve Drawable resource from Context resources
 	 * <p>
 	 * Warning: May return null if View is not attached
