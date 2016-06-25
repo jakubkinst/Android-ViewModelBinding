@@ -82,9 +82,6 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 */
 	@CallSuper
 	public void onViewAttached(boolean firstAttachment) {
-		while(!mUiThreadTaskQueue.isEmpty()) {
-			internalRunOnUiThreadNow(mUiThreadTaskQueue.poll());
-		}
 	}
 
 
@@ -293,6 +290,13 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 		if(getContext() == null)
 			return -1;
 		return ContextCompat.getColor(getContext(), resource);
+	}
+
+
+	void internalRunAllUiTasksInQueue() {
+		while(!mUiThreadTaskQueue.isEmpty()) {
+			internalRunOnUiThreadNow(mUiThreadTaskQueue.poll());
+		}
 	}
 
 

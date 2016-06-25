@@ -92,7 +92,9 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		// call ViewModel callback
 		if(viewModelWrapper.wasCreated())
 			mViewModel.onViewModelCreated();
+
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated());
+		mViewModel.internalRunAllUiTasksInQueue();
 	}
 
 
