@@ -30,4 +30,4 @@ script:
 # Unit tests
   - ./gradlew testReleaseUnitTest
 # If successful and Git TAG exists - publish to Bintray
-  - '[[ $TRAVIS_TAG != * ]]  || ./gradlew bintrayUpload -q'
+  - '[[ -z $TRAVIS_TAG ]]  || ./gradlew bintrayUpload -q'
