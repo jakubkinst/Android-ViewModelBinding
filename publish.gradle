@@ -74,7 +74,7 @@ artifacts {
 // Bintray
 
 bintray {
-	user = bintrayUserName
+	user = bintrayUser
 	key = "$System.env.BINTRAY_API_KEY"
 
 	configurations = ['archives']
