@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+
+
+// Last Git tag name on current branch
+final GIT_TAG_NAME = 'git describe --tags --abbrev=0'.execute([], project.rootDir).text.trim()
+// Total number of tags in the app
+final GIT_TAG_COUNT = 'git tag --list'.execute([], project.rootDir).text.split("\n").size()
+
+ext {
+	bintrayUser = 'jakubkinst'
+	bintrayRepo = 'cz.kinst.jakub'
+	bintrayName = 'android-viewmodelbinding'
+
+	publishedGroupId = 'cz.kinst.jakub'
+	libraryName = 'Android-ViewModelBinding'
+	artifact = 'viewmodelbinding'
+
+	libraryDescription = 'ViewModel pattern together with Android Data Binding'
+
+	siteUrl = 'https://github.com/jakubkinst/Android-ViewModelBinding'
+	gitUrl = 'https://github.com/jakubkinst/Android-ViewModelBinding'
+
+	libraryVersion = GIT_TAG_NAME
+
+	developerId = 'jakubkinst'
+	developerName = 'Jakub Kinst'
+	developerEmail = 'jakub@kinst.cz'
+
+	licenseName = 'The Apache Software License, Version 2.0'
+	licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	allLicenses = ["Apache-2.0"]
+}
+
+android {
+	compileSdkVersion 24
+	buildToolsVersion "24.0.0"
+
+	defaultConfig {
+		minSdkVersion 14
+		targetSdkVersion 24
+		versionCode 1
+		versionName libraryVersion
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+	dataBinding {
+		enabled = true;
+	}
+	lintOptions {
+		abortOnError false
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+	testCompile 'junit:junit:4.12'
+	compile 'com.android.support:appcompat-v7:24.0.0'
+	provided 'com.squareup.retrofit2:retrofit:2.1.0'
+}
+
+apply from: '../publish.gradle'
+
