@@ -2,6 +2,7 @@ package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 
@@ -19,4 +20,6 @@ public interface ViewInterface<T extends ViewDataBinding, S extends ViewModel> {
 	Activity getActivity();
 	Bundle getBundle();
 	ViewModelBindingConfig<S> getViewModelBindingConfig();
+	void startActivityForResult(Intent intent, int requestCode);
+	void startActivityForResult(Intent intent, int requestCode, Bundle bundle);
 }
