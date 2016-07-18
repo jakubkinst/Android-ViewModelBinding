@@ -2,7 +2,7 @@
 <recipe>
 
     <#if appCompat && !(hasDependency('cz.kinst.jakub:viewmodelbinding'))>
-    	<dependency mavenUrl="cz.kinst.jakub:viewmodelbinding:0.9.2"/>
+    	<dependency mavenUrl="cz.kinst.jakub:viewmodelbinding:0.9.4"/>
 	</#if>
 	<#if useStatefulLayout && !(hasDependency('cz.kinst.jakub:stateful-layout'))>
         <dependency mavenUrl="cz.kinst.jakub:stateful-layout:1.1.1"/>

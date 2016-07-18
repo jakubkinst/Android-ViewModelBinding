@@ -23,7 +23,7 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ## Installation
 
 ```groovy
-compile 'cz.kinst.jakub:viewmodelbinding:0.9.2'
+compile 'cz.kinst.jakub:viewmodelbinding:0.9.4'
 ```
 
 Don't forget to **enable Data Binding** in your module:
@@ -133,6 +133,9 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
 ## Changelog
+#### v0.9.4 (Jul 18, 2016)
+- ViewInterface now has to implement `startActivityForResult()`
+
 #### v0.9.2 (Jun 28, 2016)
 - Tasks added by `runOnUiThread()` are performed after `onViewAttached()` method is called when there are some left in the queue
 
