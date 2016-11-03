@@ -1,6 +1,7 @@
 package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 */
 	public void onCreate(ViewInterface<T, R> view, @Nullable Bundle savedInstanceState) {
 		// get ViewModelBinding config
-		mViewModelConfig = view.getViewModelBindingConfig();
 		if(mViewModelConfig == null)
 			throw new IllegalStateException("View not configured. Provide valid ViewModelBindingConfig in your View.");
 
@@ -82,11 +82,8 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 
 		// bind all together
 		mViewModel.bindView(view);
-		if (!mBinding.setVariable(mViewModelConfig.getViewModelVariableName(), mViewModel)) {
-			throw new IllegalArgumentException("Binding variable wasn't set successfully. Probably viewModelVariableName of your " +
-					"ViewModelBindingConfig of " + view.getClass().getSimpleName() + " doesn't match any variable in "
-					+ mBinding.getClass().getSimpleName());
-		}
+		mBinding.setVariable(mViewModelConfig.getViewModelVariableName(), mViewModel);
+		mBinding.setVariable(mViewModelConfig.getViewVariableName(), view);
 
 
 		// call ViewModel callback
@@ -206,6 +203,16 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 */
 	public T getBinding() {
 		return mBinding;
+	}
+
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mViewModel.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+	public void setup(int layoutResourceId, Class<R> viewModelClass) {
+		mViewModelConfig = new ViewModelBindingConfig<R>(layoutResourceId, viewModelClass);
 	}
 
 

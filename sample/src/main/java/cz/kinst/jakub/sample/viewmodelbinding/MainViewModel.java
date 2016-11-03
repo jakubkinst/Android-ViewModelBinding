@@ -2,7 +2,6 @@ package cz.kinst.jakub.sample.viewmodelbinding;
 
 import android.databinding.ObservableField;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
 import cz.kinst.jakub.sample.viewmodelbinding.databinding.ActivityMainBinding;
@@ -32,11 +31,6 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 	}
 
 
-	public void onClickGreetButton(View v) {
-		name.set(getBinding().nameEditText.getText().toString());
-	}
-
-
 	@Override
 	public void onViewDetached(boolean finalDetachment) {
 		super.onViewDetached(finalDetachment);
@@ -48,20 +42,25 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 	}
 
 
-	public void onClickedShowDialogFragmentButton(View v) {
+	@Override
+	public void onViewModelDestroyed() {
+		super.onViewModelDestroyed();
+		// Cancel API calls
+	}
+
+
+	public void greet() {
+		name.set(getBinding().nameEditText.getText().toString());
+	}
+
+
+	public void showDialog() {
 		dialog = SampleDialogFragment.newInstance();
 		dialog.setListener(() -> {
 			if(hasViewAttached())
 				Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show();
 		});
 		dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "sample");
-	}
-
-
-	@Override
-	public void onViewModelDestroyed() {
-		super.onViewModelDestroyed();
-		// Cancel API calls
 	}
 
 }

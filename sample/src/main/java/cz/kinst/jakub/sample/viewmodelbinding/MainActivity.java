@@ -1,19 +1,18 @@
 package cz.kinst.jakub.sample.viewmodelbinding;
 
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import cz.kinst.jakub.sample.viewmodelbinding.databinding.ActivityMainBinding;
 import cz.kinst.jakub.viewmodelbinding.ViewModelActivity;
-import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
 
 
-/**
- * Created by jakubkinst on 10/11/15.
- */
 public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainViewModel> {
 
-
 	@Override
-	public ViewModelBindingConfig<MainViewModel> getViewModelBindingConfig() {
-		return new ViewModelBindingConfig<>(R.layout.activity_main, MainViewModel.class);
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		setupViewModel(R.layout.activity_main, MainViewModel.class);
+		super.onCreate(savedInstanceState);
 	}
 }

@@ -1,8 +1,10 @@
 package cz.kinst.jakub.viewmodelbinding;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -78,12 +80,24 @@ public abstract class ViewModelFragment<T extends ViewDataBinding, S extends Vie
 	}
 
 
+	public T getBinding() {
+		return mViewModelBindingHelper.getBinding();
+	}
+
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mViewModelBindingHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+
 	public S getViewModel() {
 		return mViewModelBindingHelper.getViewModel();
 	}
 
 
-	public T getBinding() {
-		return mViewModelBindingHelper.getBinding();
+	protected void setupViewModel(@LayoutRes int layoutResourceId, Class<S> viewModelClass) {
+		mViewModelBindingHelper.setup(layoutResourceId, viewModelClass);
 	}
 }

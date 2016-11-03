@@ -2,6 +2,7 @@ package cz.kinst.jakub.viewmodelbinding;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
@@ -208,6 +209,11 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	}
 
 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+	}
+
+
 	/**
 	 * Bind a new View instance
 	 *
@@ -315,4 +321,6 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 				mUiThreadTaskQueue.add(action);
 		}
 	}
+
+
 }

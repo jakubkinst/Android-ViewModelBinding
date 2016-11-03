@@ -14,6 +14,7 @@ public class ViewModelBindingConfig<T extends ViewModel> {
 	int mLayoutResource;
 	Class<T> mViewModelClass;
 	int mViewModelVariableName;
+	int mViewVariableName;
 
 
 	/**
@@ -23,10 +24,11 @@ public class ViewModelBindingConfig<T extends ViewModel> {
 	 * @param viewModelClass        ViewModel class
 	 * @param viewModelVariableName Data Binding variable name for injecting the ViewModel - use generated id (e.g. BR.mViewModel)
 	 */
-	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class<T> viewModelClass, int viewModelVariableName) {
+	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class<T> viewModelClass, int viewModelVariableName, int viewVariableName) {
 		mLayoutResource = layoutResource;
 		mViewModelClass = viewModelClass;
 		mViewModelVariableName = viewModelVariableName;
+		mViewVariableName = viewVariableName;
 	}
 
 
@@ -37,7 +39,7 @@ public class ViewModelBindingConfig<T extends ViewModel> {
 	 * @param viewModelClass ViewModel class
 	 */
 	public ViewModelBindingConfig(@LayoutRes int layoutResource, Class<T> viewModelClass) {
-		this(layoutResource, viewModelClass, BR.viewModel);
+		this(layoutResource, viewModelClass, cz.kinst.jakub.viewmodelbinding.BR.viewModel, cz.kinst.jakub.viewmodelbinding.BR.view);
 	}
 
 
@@ -53,5 +55,10 @@ public class ViewModelBindingConfig<T extends ViewModel> {
 
 	public int getViewModelVariableName() {
 		return mViewModelVariableName;
+	}
+
+
+	public int getViewVariableName() {
+		return mViewVariableName;
 	}
 }

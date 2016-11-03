@@ -6,8 +6,12 @@
 
 		<variable
 			name="viewModel"
-			type="boolean"/>
+			type="boolean" />
+
+		<variable
+			name="view"
+			type="boolean" />
 	</data>
 
-	<View android:tag="fake"/>
+	<View android:tag="fake" />
 </layout>

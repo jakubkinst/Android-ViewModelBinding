@@ -19,7 +19,6 @@ public interface ViewInterface<T extends ViewDataBinding, S extends ViewModel> {
 	T getBinding();
 	Activity getActivity();
 	Bundle getBundle();
-	ViewModelBindingConfig<S> getViewModelBindingConfig();
 	void startActivityForResult(Intent intent, int requestCode);
 	void startActivityForResult(Intent intent, int requestCode, Bundle bundle);
 }
