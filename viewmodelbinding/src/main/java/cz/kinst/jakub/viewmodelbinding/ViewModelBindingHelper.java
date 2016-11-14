@@ -76,7 +76,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		}
 
 		// get ViewModel instance for this screen
-		final ViewModelProvider.ViewModelWrapper<R> viewModelWrapper = ViewModelProvider.getInstance().getViewModel(mViewModelId, mViewModelConfig.getViewModelClass());
+		final ViewModelProvider.ViewModelWrapper<R> viewModelWrapper = ViewModelProvider.getInstance().getViewModel(view.getContext(), mViewModelId, mViewModelConfig.getViewModelClass());
 		mViewModel = viewModelWrapper.getViewModel();
 		mOnSaveInstanceCalled = false;
 

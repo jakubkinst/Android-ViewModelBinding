@@ -1,5 +1,6 @@
 package cz.kinst.jakub.viewmodelbinding;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.HashMap;
@@ -59,7 +60,7 @@ public class ViewModelProvider {
 	 */
 //	@SuppressWarnings("unchecked")
 	@NonNull
-	public synchronized <T extends ViewModel> ViewModelWrapper<T> getViewModel(String viewModelId, @NonNull Class<T> viewModelClass) {
+	public synchronized <T extends ViewModel> ViewModelWrapper<T> getViewModel(Context context, String viewModelId, @NonNull Class<T> viewModelClass) {
 		// try to get the instance from in-memory map
 		T instance = (T) mViewModels.get(viewModelId);
 		if(instance != null)
@@ -69,6 +70,7 @@ public class ViewModelProvider {
 		try {
 			instance = viewModelClass.newInstance();
 			instance.setViewModelId(viewModelId);
+			instance.setApplicationContext(context.getApplicationContext());
 			mViewModels.put(viewModelId, instance);
 			return new ViewModelWrapper<T>(instance, true);
 		} catch(Exception ex) {

@@ -53,8 +53,7 @@ public class MainViewModel extends ViewModel {
 	public void showDialog() {
 		dialog = SampleDialogFragment.newInstance(new Random().nextInt());
 		dialog.setListener(() -> {
-			if(hasViewAttached())
-				Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show();
+			runOnUiThread(() -> Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show());
 		});
 		dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "sample");
 	}

@@ -28,6 +28,7 @@ public abstract class ViewModel extends BaseObservable {
 	private Thread mUiThread;
 	private boolean mRunning;
 	private Queue<Runnable> mUiThreadTaskQueue = new ConcurrentLinkedQueue<>();
+	private Context mApplicationContext;
 
 
 	public ViewModel() {
@@ -113,6 +114,21 @@ public abstract class ViewModel extends BaseObservable {
 	public Context getContext() {
 		if(mView == null) return null;
 		else return mView.getContext();
+	}
+
+
+	/**
+	 * Provides Application Context instance
+	 *
+	 * @return Application Context instance at all times
+	 */
+	public Context getApplicationContext() {
+		return mApplicationContext;
+	}
+
+
+	void setApplicationContext(Context applicationContext) {
+		mApplicationContext = applicationContext;
 	}
 
 
