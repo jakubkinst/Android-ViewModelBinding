@@ -64,6 +64,7 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	testCompile 'junit:junit:4.12'
 	compile 'com.android.support:appcompat-v7:25.0.0'
+	compile 'com.android.support:design:25.0.0'
 	provided 'com.squareup.retrofit2:retrofit:2.1.0'
 }
 

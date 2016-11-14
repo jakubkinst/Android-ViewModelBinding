@@ -11,18 +11,23 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical"
-		android:padding="@dimen/activity_vertical_margin">
+		android:orientation="vertical">
+
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@{viewModel.number + ``}"
+			android:layout_gravity="center"
+			android:layout_margin="@dimen/activity_padding"
+			android:text="@{@string/hello(viewModel.name)}"
+			android:textColor="@color/colorPrimary"
 			android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-			tools:text="7" />
+			tools:text="@string/hello" />
+
 		<Button
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:onClick="@{viewModel.onClickedButton}"
-			android:text="@string/click_me" />
+			android:onClick="@{() -> viewModel.showSnackbar()}"
+			android:text="@string/click_me"
+			style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 	</LinearLayout>
 </layout>

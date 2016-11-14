@@ -9,15 +9,15 @@ import cz.kinst.jakub.viewmodelbinding.ViewModelDialogFragment;
 
 public class SampleDialogFragment extends ViewModelDialogFragment<DialogSampleBinding, SampleDialogViewModel> {
 
-	private static final String EXTRA_NUMBER = "number";
+	private static final String EXTRA_NAME = "name";
 
 	private SampleDialogViewModel.SampleDialogListener mListener;
 
 
-	public static SampleDialogFragment newInstance(int number) {
+	public static SampleDialogFragment newInstance(String name) {
 		Bundle args = new Bundle();
 		SampleDialogFragment fragment = new SampleDialogFragment();
-		args.putInt(EXTRA_NUMBER, number);
+		args.putString(EXTRA_NAME, name);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -27,12 +27,18 @@ public class SampleDialogFragment extends ViewModelDialogFragment<DialogSampleBi
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		setupViewModel(R.layout.dialog_sample, SampleDialogViewModel.class);
 		super.onCreate(savedInstanceState);
-		getViewModel().number.set(getArguments().getInt(EXTRA_NUMBER));
-		getViewModel().setListener(mListener);
+
+		initViewModel();
 	}
 
 
 	public void setListener(SampleDialogViewModel.SampleDialogListener listener) {
 		mListener = listener;
+	}
+
+
+	private void initViewModel() {
+		getViewModel().name.set(getArguments().getString(EXTRA_NAME));
+		getViewModel().setListener(mListener);
 	}
 }

@@ -1,39 +1,56 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools">
+	xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<data>
 
 		<variable
 			name="viewModel"
 			type="cz.kinst.jakub.sample.viewmodelbinding.MainViewModel" />
-
-		<variable
-			name="view"
-			type="cz.kinst.jakub.sample.viewmodelbinding.MainActivity" />
 	</data>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:padding="@dimen/activity_padding"
 		android:orientation="vertical">
 
-		<EditText
+		<android.support.design.widget.TextInputLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@={viewModel.name}"
-			android:hint="@string/hint_enter_your_name" />
+			android:layout_height="wrap_content">
 
-		<TextView
+			<EditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@={viewModel.name}"
+				android:inputType="textPersonName|textCapWords"
+				android:hint="@string/hint_enter_your_name" />
+		</android.support.design.widget.TextInputLayout>
+
+
+		<FrameLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="@{viewModel.name != null &amp;&amp; !viewModel.name.empty ? @string/hello(viewModel.name) : ``}"
-			tools:text="@string/hello" />
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+				android:textColor="@color/colorPrimary"
+				android:text="@{@string/hello(viewModel.name)}"
+				app:show="@{viewModel.name != null &amp;&amp; !viewModel.name.empty}"
+				tools:text="@string/hello" />
+		</FrameLayout>
+
 
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_gravity="center"
 			android:onClick="@{() -> viewModel.showDialog()}"
-			android:text="@string/button_dialog_fragment" />
+			android:text="@string/button_dialog_fragment"
+			style="@style/Widget.AppCompat.Button.Colored" />
 	</LinearLayout>
 </layout>

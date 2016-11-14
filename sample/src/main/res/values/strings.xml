@@ -1,7 +1,5 @@
 <resources>
-	<string name="app_name">ViewModelBinding</string>
-	<string name="temperature">%s°</string>
-	<string name="refresh">Refresh</string>
+	<string name="app_name">ViewModelBinding 2.0</string>
 	<string name="hello">Hello, %s!</string>
 	<string name="hint_enter_your_name">Enter your name</string>
 	<string name="button_dialog_fragment">Show DialogFragment</string>

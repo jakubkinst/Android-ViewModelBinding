@@ -1,24 +1,24 @@
 package cz.kinst.jakub.sample.viewmodelbinding;
 
-import android.databinding.ObservableInt;
-import android.view.View;
+import android.databinding.ObservableField;
 
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
 public class SampleDialogViewModel extends ViewModel {
-	public final ObservableInt number = new ObservableInt();
-	SampleDialogListener mListener;
+	public final ObservableField<String> name = new ObservableField<>();
+
+	private SampleDialogListener mListener;
 
 
 	public interface SampleDialogListener {
-		void onButtonClicked();
+		void onToastRequested();
 	}
 
 
-	public void onClickedButton(View v) {
+	public void showSnackbar() {
 		if(mListener != null)
-			mListener.onButtonClicked();
+			mListener.onToastRequested();
 	}
 
 

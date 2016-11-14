@@ -1,21 +1,15 @@
 package cz.kinst.jakub.sample.viewmodelbinding;
 
 import android.databinding.ObservableField;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
-
-import java.util.Random;
 
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
-/**
- * Created by jakubkinst on 10/11/15.
- */
 public class MainViewModel extends ViewModel {
 
 	public ObservableField<String> name = new ObservableField<>();
-	private SampleDialogFragment dialog;
 
 
 	@Override
@@ -26,20 +20,11 @@ public class MainViewModel extends ViewModel {
 
 
 	@Override
-	public void onViewAttached(boolean firstAttachment) {
-		super.onViewAttached(firstAttachment);
-		// manipulate with the view
-	}
-
-
-	@Override
 	public void onViewDetached(boolean finalDetachment) {
 		super.onViewDetached(finalDetachment);
 
-		// run safely on ui thread next time the view is attached (if this was called directly, getContext() would return null at this time)
-		runOnUiThread(() ->
-				Toast.makeText(getContext(), "onViewDetached()", Toast.LENGTH_SHORT).show()
-		);
+		// run safely on ui thread next time the view is attached (if this was called directly, getRootView() would return null at this time and this call would fail)
+		showSnackBar("onViewDetached()");
 	}
 
 
@@ -51,11 +36,15 @@ public class MainViewModel extends ViewModel {
 
 
 	public void showDialog() {
-		dialog = SampleDialogFragment.newInstance(new Random().nextInt());
+		SampleDialogFragment dialog = SampleDialogFragment.newInstance(name.get());
 		dialog.setListener(() -> {
-			runOnUiThread(() -> Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show());
+			showSnackBar("Button in dialog clicked");
+			dialog.dismiss();
 		});
 		dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "sample");
 	}
+
+
+	private void showSnackBar(String message) {runOnUiThread(() -> Snackbar.make(getRootView(), message, Snackbar.LENGTH_SHORT).show());}
 
 }
