@@ -4,14 +4,15 @@ import android.databinding.ObservableField;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import cz.kinst.jakub.sample.viewmodelbinding.databinding.ActivityMainBinding;
+import java.util.Random;
+
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
 /**
  * Created by jakubkinst on 10/11/15.
  */
-public class MainViewModel extends ViewModel<ActivityMainBinding> {
+public class MainViewModel extends ViewModel {
 
 	public ObservableField<String> name = new ObservableField<>();
 	private SampleDialogFragment dialog;
@@ -49,13 +50,8 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 	}
 
 
-	public void greet() {
-		name.set(getBinding().nameEditText.getText().toString());
-	}
-
-
 	public void showDialog() {
-		dialog = SampleDialogFragment.newInstance();
+		dialog = SampleDialogFragment.newInstance(new Random().nextInt());
 		dialog.setListener(() -> {
 			if(hasViewAttached())
 				Toast.makeText(getContext(), "Button in dialog clicked", Toast.LENGTH_SHORT).show();

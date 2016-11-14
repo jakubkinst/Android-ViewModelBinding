@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
-import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.CallSuper;
@@ -21,11 +20,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * ViewModel base class. Every ViewModel must extend this class
- *
- * @param <T> Layout Data Binding class
  */
-public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservable {
-	private ViewInterface<T, ? extends ViewModel> mView;
+public abstract class ViewModel extends BaseObservable {
+	private ViewInterface<?, ? extends ViewModel> mView;
 	private String mViewModelId;
 	private Handler mHandler = new Handler();
 	private Thread mUiThread;
@@ -103,7 +100,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 *
 	 * @return currently attached View or null if no View is attached
 	 */
-	public ViewInterface<T, ? extends ViewModel> getView() {
+	public ViewInterface<?, ? extends ViewModel> getView() {
 		return mView;
 	}
 
@@ -164,25 +161,12 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 
 
 	/**
-	 * Convenience method for reaching View Binding instance
-	 *
-	 * @return Layout Data Binding instance
-	 */
-	public T getBinding() {
-		if(hasViewAttached())
-			return getView().getBinding();
-		else
-			return null;
-	}
-
-
-	/**
 	 * Convenience method for binding's root View
 	 *
 	 * @return Root View
 	 */
 	public View getRootView() {
-		return getBinding().getRoot();
+		return getView().getBinding().getRoot();
 	}
 
 
@@ -219,7 +203,7 @@ public abstract class ViewModel<T extends ViewDataBinding> extends BaseObservabl
 	 *
 	 * @param viewInterface View
 	 */
-	protected void bindView(ViewInterface<T, ? extends ViewModel> viewInterface) {
+	protected void bindView(ViewInterface<?, ? extends ViewModel> viewInterface) {
 		mView = viewInterface;
 	}
 

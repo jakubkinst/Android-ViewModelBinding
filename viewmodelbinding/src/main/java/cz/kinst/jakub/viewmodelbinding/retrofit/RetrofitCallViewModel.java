@@ -1,7 +1,5 @@
 package cz.kinst.jakub.viewmodelbinding.retrofit;
 
-import android.databinding.ViewDataBinding;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +11,7 @@ import retrofit2.Callback;
 /**
  * Created by jakubkinst on 02/12/15.
  */
-public abstract class RetrofitCallViewModel<S extends ViewDataBinding> extends ViewModel<S> {
+public abstract class RetrofitCallViewModel extends ViewModel {
 
 	private Map<String, Call> mCalls = new HashMap<>();
 

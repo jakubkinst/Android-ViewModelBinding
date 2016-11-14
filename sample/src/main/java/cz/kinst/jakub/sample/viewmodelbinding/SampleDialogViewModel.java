@@ -1,12 +1,13 @@
 package cz.kinst.jakub.sample.viewmodelbinding;
 
+import android.databinding.ObservableInt;
 import android.view.View;
 
-import cz.kinst.jakub.sample.viewmodelbinding.databinding.DialogSampleBinding;
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
-public class SampleDialogViewModel extends ViewModel<DialogSampleBinding> {
+public class SampleDialogViewModel extends ViewModel {
+	public final ObservableInt number = new ObservableInt();
 	SampleDialogListener mListener;
 
 

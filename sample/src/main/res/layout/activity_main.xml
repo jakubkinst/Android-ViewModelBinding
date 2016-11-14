@@ -18,16 +18,10 @@
 		android:orientation="vertical">
 
 		<EditText
-			android:id="@+id/name_edit_text"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:text="@={viewModel.name}"
 			android:hint="@string/hint_enter_your_name" />
-
-		<Button
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:onClick="@{() -> viewModel.greet()}"
-			android:text="Greet" />
 
 		<TextView
 			android:layout_width="match_parent"

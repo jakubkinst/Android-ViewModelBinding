@@ -1,6 +1,5 @@
 package cz.kinst.jakub.viewmodelbinding;
 
-import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ public class ViewModelProvider {
 	/**
 	 * HashMap storing ViewModel instances
 	 */
-	private final HashMap<String, ViewModel<? extends ViewDataBinding>> mViewModels;
+	private final HashMap<String, ViewModel> mViewModels;
 
 
 	/**
