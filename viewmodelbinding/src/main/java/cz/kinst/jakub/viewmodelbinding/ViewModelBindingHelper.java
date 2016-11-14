@@ -46,7 +46,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	public void onCreate(ViewInterface<T, R> view, @Nullable Bundle savedInstanceState) {
 		// get ViewModelBinding config
 		if(mViewModelConfig == null)
-			throw new IllegalStateException("View not configured. Provide valid ViewModelBindingConfig in your View.");
+			throw new IllegalStateException("ViewModel has not been set up. You probably need to call setupViewModel() before calling super.onCreate().");
 
 		// skip if already created
 		if(mAlreadyCreated) return;
