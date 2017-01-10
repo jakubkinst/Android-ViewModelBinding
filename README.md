@@ -1,4 +1,4 @@
-# Android ViewModelBinding
+# Android ViewModelBinding 2.0 ALPHA
 [![Build Status](https://travis-ci.org/jakubkinst/Android-ViewModelBinding.svg?branch=master)](https://travis-ci.org/jakubkinst/Android-ViewModelBinding) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ViewModelBinding-green.svg?style=true)](https://android-arsenal.com/details/1/3240) [ ![Download](https://api.bintray.com/packages/jakubkinst/cz.kinst.jakub/android-viewmodelbinding/images/download.svg) ](https://bintray.com/jakubkinst/cz.kinst.jakub/android-viewmodelbinding/_latestVersion)
 ## Intro
 A lightweight library aiming to speed up Android app development by leveraging the new [Android Data Binding](http://developer.android.com/tools/data-binding/guide.html) and taking the best from the [Model-View-ViewModel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) design pattern.
@@ -23,7 +23,7 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ## Installation
 
 ```groovy
-compile 'cz.kinst.jakub:viewmodelbinding:0.9.4'
+compile 'cz.kinst.jakub:viewmodelbinding:2.0.0-alpha1'
 ```
 
 Don't forget to **enable Data Binding** in your module:
@@ -43,8 +43,9 @@ android {
 public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainViewModel> {
 
 	@Override
-	public ViewModelBindingConfig<MainViewModel> getViewModelBindingConfig() {
-		return new ViewModelBindingConfig<>(R.layout.activity_main, MainViewModel.class);
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		setupViewModel(R.layout.activity_main, MainViewModel.class);
+		super.onCreate(savedInstanceState);
 	}
 	
 	// handle Activity related stuff here - Options menu, Toolbar, Window config, etc.
@@ -55,40 +56,62 @@ public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainVie
 
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools">
+	xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<data>
 
 		<variable
 			name="viewModel"
-			type="cz.kinst.jakub.sample.viewmodelbinding.MainViewModel"/>
+			type="cz.kinst.jakub.sample.viewmodelbinding.MainViewModel" />
 	</data>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:padding="@dimen/activity_padding"
 		android:orientation="vertical">
 
-		<EditText
-			android:id="@+id/name_edit_text"
+		<android.support.design.widget.TextInputLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:hint="@string/hint_enter_your_name"/>
+			android:layout_height="wrap_content">
+
+			<EditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@={viewModel.name}"
+				android:inputType="textPersonName|textCapWords"
+				android:hint="@string/hint_enter_your_name" />
+		</android.support.design.widget.TextInputLayout>
+
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+				android:textColor="@color/colorPrimary"
+				android:text="@{@string/hello(viewModel.name)}"
+				app:show="@{viewModel.name != null &amp;&amp; !viewModel.name.empty}"
+				tools:text="@string/hello" />
+		</FrameLayout>
+
 
 		<Button
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:onClick="@{viewModel.onClickGreetButton}"
-			android:text="Greet"/>
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="@{viewModel.name != null &amp;&amp; !viewModel.name.empty ? @string/hello(viewModel.name) : ``}"
-			tools:text="@string/hello"/>
+			android:layout_gravity="center"
+			android:onClick="@{() -> viewModel.showDialog()}"
+			android:text="@string/button_dialog_fragment"
+			style="@style/Widget.AppCompat.Button.Colored" />
 	</LinearLayout>
 </layout>
+
 ```
 
     
@@ -96,7 +119,7 @@ public class MainActivity extends ViewModelActivity<ActivityMainBinding, MainVie
 `MainViewModel.java`
 
 ```java
-public class MainViewModel extends ViewModel<ActivityMainBinding> {
+public class MainViewModel extends ViewModel {
 
 	public final ObservableField<String> name = new ObservableField<>();
 
@@ -111,15 +134,8 @@ public class MainViewModel extends ViewModel<ActivityMainBinding> {
 		super.onViewAttached(firstAttachment);
 		// manipulate with the view
 	}
-
-	public void onClickGreetButton(View v) {
-		name.set(getBinding().nameEditText.getText().toString());
-	}
 }
 ```
-
-### Real usage
-For a more complex example of using this approach, see [Weather 2.0](https://github.com/jakubkinst/Weather-2.0) project.
 
 ### Android Studio New Screen Template
 To deploy new screens even faster, use the included [Android Studio Template](/extras/AndroidStudioTemplate) (`revision 2`)
@@ -132,7 +148,20 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 2. Restart Android Studio
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
+## Version 2.0.0 changes
+- Activity result delivered to ViewModel automatically
+- ViewModel is not tied to binding (layout) anymore
+- ViewModel has `getApplicationContext()` which returns Context at all times (even if View is not attached at the moment)
+- Included couple of handy BindingAdapters (`app:show`, `app:hide`, `app:invisible`)
+- New way of configuring Activity/Fragment (call `setupViewModel()` before `super.onCreate()`)
+- Added `onViewModelInitialized()` callback to Activity/Fragment to be able to setup ViewModel before `onViewModelCreated()` is called (example: feeding ViewModel with Extras/Arguments - see `ArgumentDialogFragment` in sample)
+- Optional automatic binding of Activity/Fragment into layout file next to the ViewModel instance (add variable of name `view` and appropriate type)
+
 ## Changelog
+
+#### v2.0.0-alpha1
+- First 2.0.0 version
+
 #### v0.9.4 (Jul 18, 2016)
 - ViewInterface now has to implement `startActivityForResult()`
 
