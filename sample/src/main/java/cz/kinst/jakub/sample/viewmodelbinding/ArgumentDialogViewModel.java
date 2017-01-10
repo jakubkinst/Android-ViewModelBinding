@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
-public class SampleDialogViewModel extends ViewModel {
+public class ArgumentDialogViewModel extends ViewModel {
 	public final ObservableField<String> name = new ObservableField<>();
 
 	private SampleDialogListener mListener;

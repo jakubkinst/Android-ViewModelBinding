@@ -36,7 +36,7 @@ public class MainViewModel extends ViewModel {
 
 
 	public void showDialog() {
-		SampleDialogFragment dialog = SampleDialogFragment.newInstance(name.get());
+		ArgumentDialogFragment dialog = ArgumentDialogFragment.newInstance(name.get());
 		dialog.setListener(() -> {
 			showSnackBar("Button in dialog clicked");
 			dialog.dismiss();

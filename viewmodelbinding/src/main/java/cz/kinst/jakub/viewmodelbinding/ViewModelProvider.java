@@ -22,6 +22,11 @@ public class ViewModelProvider {
 	private final HashMap<String, ViewModel> mViewModels;
 
 
+	private ViewModelProvider() {
+		mViewModels = new HashMap<>();
+	}
+
+
 	/**
 	 * Static instance getter
 	 *
@@ -31,11 +36,6 @@ public class ViewModelProvider {
 		if(sInstance == null)
 			sInstance = new ViewModelProvider();
 		return sInstance;
-	}
-
-
-	private ViewModelProvider() {
-		mViewModels = new HashMap<>();
 	}
 
 

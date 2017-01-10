@@ -3,7 +3,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
 	compileSdkVersion 25
-	buildToolsVersion "24.0.2"
+	buildToolsVersion "25.0.2"
 
 	defaultConfig {
 		applicationId "cz.kinst.jakub.sample.viewmodelbinding"
@@ -35,6 +35,5 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	testCompile 'junit:junit:4.12'
 	compile project(':viewmodelbinding')
-	compile 'com.android.support:appcompat-v7:25.0.0'
-	compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
+	compile 'com.android.support:appcompat-v7:25.1.0'
 }

@@ -40,10 +40,12 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 * <p>
 	 * The ViewModel instance will be either restored from memory or instantiated via {@link ViewModelProvider}
 	 *
-	 * @param savedInstanceState savedInstance state from {@link Activity#onCreate(Bundle)} or
-	 *                           {@link Fragment#onCreate(Bundle)}
+	 * @param savedInstanceState             savedInstance state from {@link Activity#onCreate(Bundle)} or
+	 *                                       {@link Fragment#onCreate(Bundle)}
+	 * @param onViewModelInitializedCallback callback to be called after the viewModel was created
+	 *                                       (used to be able to setup ViewModel from Activity/Fragment before {@link ViewModel#onViewModelCreated()} is called)
 	 */
-	public void onCreate(ViewInterface<T, R> view, @Nullable Bundle savedInstanceState) {
+	public void onCreate(ViewInterface<T, R> view, @Nullable Bundle savedInstanceState, OnViewModelInitializedCallback<R> onViewModelInitializedCallback) {
 		// get ViewModelBinding config
 		if(mViewModelConfig == null)
 			throw new IllegalStateException("ViewModel has not been set up. You probably need to call setupViewModel() before calling super.onCreate().");
@@ -87,8 +89,11 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 
 
 		// call ViewModel callback
-		if(viewModelWrapper.wasCreated())
+		if(viewModelWrapper.wasCreated()) {
+			if(onViewModelInitializedCallback != null)
+				onViewModelInitializedCallback.onViewModelInitialized(mViewModel);
 			mViewModel.onViewModelCreated();
+		}
 
 		mViewModel.onViewAttached(viewModelWrapper.wasCreated());
 		mViewModel.internalRunAllUiTasksInQueue();
@@ -128,6 +133,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 			mViewModel.onViewDetached(false);
 			mAlreadyCreated = false;
 		}
+		mBinding = null;
 	}
 
 
@@ -167,6 +173,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		} else
 			mViewModel.onViewDetached(false);
 		mAlreadyCreated = false;
+		mBinding = null;
 	}
 
 

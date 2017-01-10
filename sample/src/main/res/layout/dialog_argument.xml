@@ -5,7 +5,7 @@
 
 		<variable
 			name="viewModel"
-			type="cz.kinst.jakub.sample.viewmodelbinding.SampleDialogViewModel" />
+			type="cz.kinst.jakub.sample.viewmodelbinding.ArgumentDialogViewModel" />
 	</data>
 
 	<LinearLayout

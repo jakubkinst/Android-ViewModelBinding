@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S extends ViewModel> extends DialogFragment implements ViewInterface<T, S> {
+public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S extends ViewModel> extends DialogFragment implements ViewInterface<T, S>, OnViewModelInitializedCallback<S> {
 
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		mViewModelBindingHelper.onCreate(this, savedInstanceState);
+		mViewModelBindingHelper.onCreate(this, savedInstanceState, this);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -27,7 +27,7 @@ public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S exten
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mViewModelBindingHelper.onCreate(this, savedInstanceState);
+		mViewModelBindingHelper.onCreate(this, savedInstanceState, this);
 		return mViewModelBindingHelper.getBinding().getRoot();
 	}
 
@@ -89,6 +89,12 @@ public abstract class ViewModelDialogFragment<T extends ViewDataBinding, S exten
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		mViewModelBindingHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+	@Override
+	public void onViewModelInitialized(S viewModel) {
+
 	}
 
 

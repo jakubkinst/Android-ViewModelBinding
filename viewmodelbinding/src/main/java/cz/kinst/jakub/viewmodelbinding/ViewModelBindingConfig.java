@@ -8,7 +8,7 @@ import android.support.annotation.LayoutRes;
  * <p>
  * Config contains layout resource ID, ViewModel class, ViewModel binding variable name
  */
-public class ViewModelBindingConfig<T extends ViewModel> {
+class ViewModelBindingConfig<T extends ViewModel> {
 
 	@LayoutRes
 	int mLayoutResource;

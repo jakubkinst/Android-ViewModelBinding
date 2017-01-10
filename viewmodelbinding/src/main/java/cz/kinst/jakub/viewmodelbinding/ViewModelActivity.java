@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 
-public abstract class ViewModelActivity<T extends ViewDataBinding, S extends ViewModel> extends AppCompatActivity implements ViewInterface<T, S> {
+public abstract class ViewModelActivity<T extends ViewDataBinding, S extends ViewModel> extends AppCompatActivity implements ViewInterface<T, S>, OnViewModelInitializedCallback<S> {
 	private final ViewModelBindingHelper<S, T> mViewModelBindingHelper = new ViewModelBindingHelper<>();
 
 
@@ -57,7 +57,7 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mViewModelBindingHelper.onCreate(this, savedInstanceState);
+		mViewModelBindingHelper.onCreate(this, savedInstanceState, this);
 	}
 
 
@@ -79,6 +79,12 @@ public abstract class ViewModelActivity<T extends ViewDataBinding, S extends Vie
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		mViewModelBindingHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+	@Override
+	public void onViewModelInitialized(S viewModel) {
+
 	}
 
 
