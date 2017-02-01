@@ -1,4 +1,4 @@
-package ${packageName};
+package ${packageName}.${vmPackage};
 
 import android.databinding.ObservableField;
 import android.view.View;
