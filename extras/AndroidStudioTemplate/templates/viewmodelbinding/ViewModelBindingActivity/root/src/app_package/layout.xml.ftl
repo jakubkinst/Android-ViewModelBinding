@@ -7,7 +7,7 @@
 
 		<variable
 			name="viewModel"
-			type="${packageName}.${viewModelClass}"/>
+			type="${packageName}.${vmPackage}.${viewModelClass}"/>
 	</data>
 	<#if useStatefulLayout>
 	<cz.kinst.jakub.view.StatefulLayout
