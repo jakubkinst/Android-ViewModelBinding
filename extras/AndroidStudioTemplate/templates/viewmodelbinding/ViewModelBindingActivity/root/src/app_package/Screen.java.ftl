@@ -1,4 +1,4 @@
-package ${packageName}.${scrPackage};
+package ${packageName}<#if scrPackage != "">.${scrPackage}</#if>;
 
 <#if screenType == "Fragment">
 import android.os.Bundle;
