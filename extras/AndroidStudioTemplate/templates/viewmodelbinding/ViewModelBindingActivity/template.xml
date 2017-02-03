@@ -69,6 +69,18 @@
         constraints="package"
         default="com.mycompany.myapp" />
 
+    <parameter
+        id="vmPackage"
+        name="View Model Package name"
+        type="string"
+        default="viewmodel" />
+
+    <parameter
+        id="scrPackage"
+        name="Screen Package name"
+        type="string"
+        default="activity" />
+
     <!-- 128x128 thumbnails relative to template.xml -->
     <thumbs>
         <!-- default thumbnail is required -->

@@ -19,10 +19,10 @@
                  to="${escapeXmlAttribute(resOut)}/layout/${layoutName}.xml" />
 
     <instantiate from="root/src/app_package/Screen.java.ftl"
-                   to="${escapeXmlAttribute(srcOut)}/${screenClass}.java" />
+                   to="${escapeXmlAttribute(srcOut)}/${scrPackage}/${screenClass}.java" />
 
     <instantiate from="root/src/app_package/ViewModel.java.ftl"
-                   to="${escapeXmlAttribute(srcOut)}/${viewModelClass}.java" />
+                   to="${escapeXmlAttribute(srcOut)}/${vmPackage}/${viewModelClass}.java" />
 
     <open file="${escapeXmlAttribute(srcOut)}/${screenClass}.java" />
     <open file="${escapeXmlAttribute(resOut)}/layout/${layoutName}.xml" />

@@ -1,4 +1,4 @@
-package ${packageName};
+package ${packageName}<#if vmPackage != "">.${vmPackage}</#if>;
 
 import android.databinding.ObservableField;
 import android.view.View;
