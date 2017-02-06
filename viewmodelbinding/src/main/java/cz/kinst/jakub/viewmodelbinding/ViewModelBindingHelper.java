@@ -29,7 +29,6 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	private String mViewModelId;
 	private R mViewModel;
 	private boolean mModelRemoved;
-	private boolean mOnSaveInstanceCalled;
 	private T mBinding;
 	private boolean mAlreadyCreated;
 	private ViewModelBindingConfig<R> mViewModelConfig;
@@ -80,7 +79,6 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 		// get ViewModel instance for this screen
 		final ViewModelProvider.ViewModelWrapper<R> viewModelWrapper = ViewModelProvider.getInstance().getViewModel(view.getContext(), mViewModelId, mViewModelConfig.getViewModelClass());
 		mViewModel = viewModelWrapper.getViewModel();
-		mOnSaveInstanceCalled = false;
 
 		// bind all together
 		mViewModel.bindView(view);
@@ -148,7 +146,7 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 
 		if(fragment.getActivity().isFinishing()) {
 			removeViewModel();
-		} else if(fragment.isRemoving() && !mOnSaveInstanceCalled) {
+		} else if(fragment.isRemoving()) {
 			// The fragment can be still in backstack even if isRemoving() is true.
 			// We check mOnSaveInstanceCalled - if this was not called then the fragment is totally removed.
 			Log.d(LOG_TAG, "Removing viewmodel - fragment replaced");
@@ -197,9 +195,6 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	 */
 	public void onSaveInstanceState(@NonNull Bundle bundle) {
 		bundle.putString(getViewModelIdFieldName(), mViewModelId);
-		if(mViewModel != null) {
-			mOnSaveInstanceCalled = true;
-		}
 	}
 
 
