@@ -23,7 +23,7 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ## Installation
 
 ```groovy
-compile 'cz.kinst.jakub:viewmodelbinding:2.0.0-alpha1'
+compile 'cz.kinst.jakub:viewmodelbinding:2.0.0-alpha2'
 ```
 
 Don't forget to **enable Data Binding** in your module:
