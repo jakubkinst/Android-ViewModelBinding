@@ -1,5 +1,6 @@
 package cz.kinst.jakub.sample.viewmodelbinding;
 
+import android.Manifest;
 import android.databinding.ObservableField;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,11 @@ public class MainViewModel extends ViewModel {
 	public void onViewModelCreated() {
 		super.onViewModelCreated();
 		// Do API calls etc.
+
+		getPermissionsManager().checkOrRequestPermissions(Manifest.permission.ACCESS_FINE_LOCATION, permissionsResult -> {
+			if(permissionsResult.isGranted())
+				showSnackBar("Permissions Acquired");
+		});
 	}
 
 

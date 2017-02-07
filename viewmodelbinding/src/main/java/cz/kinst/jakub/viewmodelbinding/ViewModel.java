@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * ViewModel base class. Every ViewModel must extend this class
  */
 public abstract class ViewModel extends BaseObservable {
+
 	private ViewInterface<?, ? extends ViewModel> mView;
 	private String mViewModelId;
 	private Handler mHandler = new Handler();
@@ -29,6 +30,7 @@ public abstract class ViewModel extends BaseObservable {
 	private boolean mRunning;
 	private Queue<Runnable> mUiThreadTaskQueue = new ConcurrentLinkedQueue<>();
 	private Context mApplicationContext;
+	private PermissionsManager mPermissionsManager = new PermissionsManager(this);
 
 
 	public ViewModel() {
@@ -127,8 +129,19 @@ public abstract class ViewModel extends BaseObservable {
 	}
 
 
+	public PermissionsManager getPermissionsManager() {
+		return mPermissionsManager;
+	}
+
+
 	void setApplicationContext(Context applicationContext) {
 		mApplicationContext = applicationContext;
+	}
+
+
+	@CallSuper
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		getPermissionsManager().onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
 
 

@@ -218,6 +218,11 @@ public class ViewModelBindingHelper<R extends ViewModel, T extends ViewDataBindi
 	}
 
 
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		mViewModel.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	}
+
+
 	/**
 	 * This method defines a key under which the ViewModel ID will be stored inside SavedInstanceState of the Activity/Fragment.
 	 * <p>
