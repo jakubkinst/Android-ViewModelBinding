@@ -2,10 +2,10 @@
 <recipe>
 
     <#if appCompat && !(hasDependency('cz.kinst.jakub:viewmodelbinding'))>
-    	<dependency mavenUrl="cz.kinst.jakub:viewmodelbinding:0.9.4"/>
+    	<dependency mavenUrl="cz.kinst.jakub:viewmodelbinding:2.0.0"/>
 	</#if>
-	<#if useStatefulLayout && !(hasDependency('cz.kinst.jakub:stateful-layout'))>
-        <dependency mavenUrl="cz.kinst.jakub:stateful-layout:1.1.1"/>
+	<#if useStatefulLayout && !(hasDependency('cz.kinst.jakub:android-stateful-layout-simple'))>
+        <dependency mavenUrl="cz.kinst.jakub:android-stateful-layout-simple:2.0.4"/>
 	</#if>
 
     <#if screenType == "Activity">

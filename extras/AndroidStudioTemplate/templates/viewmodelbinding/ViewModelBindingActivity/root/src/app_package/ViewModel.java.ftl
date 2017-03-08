@@ -4,16 +4,16 @@ import android.databinding.ObservableField;
 import android.view.View;
 
 <#if useStatefulLayout>
-import cz.kinst.jakub.view.StatefulLayout;
+import cz.kinst.jakub.view.SimpleStatefulLayout;
 </#if>
 
 import cz.kinst.jakub.viewmodelbinding.ViewModel;
 
 
-public class ${viewModelClass} extends ViewModel<${underscoreToCamelCase(layoutName)}Binding> {
+public class ${viewModelClass} extends ViewModel {
 
 	<#if useStatefulLayout>
-	public final ObservableField<StatefulLayout.State> state = new ObservableField<>(StatefulLayout.State.PROGRESS);
+	public final ObservableField<String> state = new ObservableField<>(SimpleStatefulLayout.State.PROGRESS);
 	</#if>
 
 	@Override
@@ -21,7 +21,7 @@ public class ${viewModelClass} extends ViewModel<${underscoreToCamelCase(layoutN
 		super.onViewModelCreated();
 		// Do initial setup
 		<#if useStatefulLayout>
-		state.set(StatefulLayout.State.CONTENT);
+		state.set(SimpleStatefulLayout.State.CONTENT);
 		</#if>
 	}
 }

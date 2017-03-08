@@ -10,7 +10,7 @@
 			type="${packageName}.<#if vmPackage != "">${vmPackage}.</#if>${viewModelClass}"/>
 	</data>
 	<#if useStatefulLayout>
-	<cz.kinst.jakub.view.StatefulLayout
+	<cz.kinst.jakub.view.SimpleStatefulLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				app:state="@{viewModel.state}">
@@ -21,6 +21,6 @@
 			android:orientation="vertical">
 		</LinearLayout>
 	<#if useStatefulLayout>
-	</cz.kinst.jakub.view.StatefulLayout>
+	</cz.kinst.jakub.view.SimpleStatefulLayout>
 	</#if>
 </layout>

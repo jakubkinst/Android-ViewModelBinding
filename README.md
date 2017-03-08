@@ -1,4 +1,4 @@
-# Android ViewModelBinding 2.0 ALPHA
+# Android ViewModelBinding 2.0
 [![Build Status](https://travis-ci.org/jakubkinst/Android-ViewModelBinding.svg?branch=master)](https://travis-ci.org/jakubkinst/Android-ViewModelBinding) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ViewModelBinding-green.svg?style=true)](https://android-arsenal.com/details/1/3240) [ ![Download](https://api.bintray.com/packages/jakubkinst/cz.kinst.jakub/android-viewmodelbinding/images/download.svg) ](https://bintray.com/jakubkinst/cz.kinst.jakub/android-viewmodelbinding/_latestVersion)
 ## Intro
 A lightweight library aiming to speed up Android app development by leveraging the new [Android Data Binding](http://developer.android.com/tools/data-binding/guide.html) and taking the best from the [Model-View-ViewModel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) design pattern.
@@ -23,15 +23,13 @@ ViewModel instances are stored in a global static Map and reattached automatical
 ## Installation
 
 ```groovy
-compile 'cz.kinst.jakub:viewmodelbinding:2.0.0-alpha2'
+compile 'cz.kinst.jakub:viewmodelbinding:2.0.0'
 ```
 
 Don't forget to **enable Data Binding** in your module:
 ```groovy 	
 android {
-	dataBinding {
-		enabled = true;
-	}
+	dataBinding.enabled = true
 }
 ```
 ## Usage
@@ -156,10 +154,11 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 - New way of configuring Activity/Fragment (call `setupViewModel()` before `super.onCreate()`)
 - Added `onViewModelInitialized()` callback to Activity/Fragment to be able to setup ViewModel before `onViewModelCreated()` is called (example: feeding ViewModel with Extras/Arguments - see `ArgumentDialogFragment` in sample)
 - Optional automatic binding of Activity/Fragment into layout file next to the ViewModel instance (add variable of name `view` and appropriate type)
+- Added simple permission handling (PermissionManager) to ViewModel - see sample
 
 ## Changelog
 
-#### v2.0.0-alpha1
+#### v2.0.0
 - First 2.0.0 version
 
 #### v0.9.4 (Jul 18, 2016)

@@ -1,8 +1,6 @@
 package ${packageName}<#if scrPackage != "">.${scrPackage}</#if>;
 
-<#if screenType == "Fragment">
 import android.os.Bundle;
-</#if>
 import cz.kinst.jakub.viewmodelbinding.ViewModelActivity;
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig;
 
@@ -18,9 +16,9 @@ public class ${screenClass} extends ViewModel${screenType}<${underscoreToCamelCa
 	}
 	</#if>
 
-
-    @Override
-	public ViewModelBindingConfig<${viewModelClass}> getViewModelBindingConfig() {
-		return new ViewModelBindingConfig<>(R.layout.${layoutName}, ${classToResource(screenClass)?cap_first}ViewModel.class, BR.viewModel);
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		setupViewModel(R.layout.${layoutName}, ${classToResource(screenClass)?cap_first}ViewModel.class);
+		super.onCreate(savedInstanceState);
 	}
 }
