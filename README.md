@@ -148,7 +148,7 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 
 ## Changelog
 
-#### v2.0.0
+#### v2.0.0 (Mar 8, 2017)
 - Activity result delivered to ViewModel automatically
 - ViewModel is not tied to binding (layout) anymore
 - ViewModel has `getApplicationContext()` which returns Context at all times (even if View is not attached at the moment)
