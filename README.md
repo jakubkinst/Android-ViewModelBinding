@@ -146,7 +146,9 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 2. Restart Android Studio
 3. Use `File>New>ViewModelBinding>ViewModelBinding Screen` action to add a new screen
 
-## Version 2.0.0 changes
+## Changelog
+
+#### v2.0.0
 - Activity result delivered to ViewModel automatically
 - ViewModel is not tied to binding (layout) anymore
 - ViewModel has `getApplicationContext()` which returns Context at all times (even if View is not attached at the moment)
@@ -154,12 +156,7 @@ To deploy new screens even faster, use the included [Android Studio Template](/e
 - New way of configuring Activity/Fragment (call `setupViewModel()` before `super.onCreate()`)
 - Added `onViewModelInitialized()` callback to Activity/Fragment to be able to setup ViewModel before `onViewModelCreated()` is called (example: feeding ViewModel with Extras/Arguments - see `ArgumentDialogFragment` in sample)
 - Optional automatic binding of Activity/Fragment into layout file next to the ViewModel instance (add variable of name `view` and appropriate type)
-- Added simple permission handling (PermissionManager) to ViewModel - see sample
-
-## Changelog
-
-#### v2.0.0
-- First 2.0.0 version
+- [ALPHA] Added simple permission handling (PermissionManager) to ViewModel - see sample
 
 #### v0.9.4 (Jul 18, 2016)
 - ViewInterface now has to implement `startActivityForResult()`
